@@ -3,95 +3,57 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+<FrameLayout
+    android:id="@+id/main_frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"></FrameLayout>
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:background="#fff">
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:text="型号："
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="HD667232"
-                    android:textSize="20dp"
-                    android:textColor="#424897"/>
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="剩余纸箱："
-                    android:textSize="20dp"
-                    android:textColor="#424897"/>
-                <TextView
-                    android:text="1000"
-                    android:textSize="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="剩余材料："
-                        android:textSize="20dp"
-                        android:textColor="#424897"/>
-                    <TextView
-                        android:text="1000"
-                        android:textSize="20dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp">
-                    <TextView
-                        android:textColor="@color/colorAccent"
-                        android:text="(仍需订100份材料)"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
+            android:id="@+id/boxs_main"
             android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageButton
-                android:id="@+id/popup_button"
-                android:src="@drawable/popup_selected"
-                android:layout_width="35dip"
-                android:layout_height="35dip"
-                android:scaleType="centerInside"
-                android:background="#fff"
-                android:layout_gravity="right"
-                android:layout_marginRight="10dp"/>
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <ImageView
+                android:id="@+id/boxs_image"
+                android:src="@drawable/ic_dns_blue_48dp"
+                android:layout_width="30dip"
+                android:layout_height="30dip"
+                android:layout_gravity="center"/>
+            <TextView
+                android:id="@+id/boxs_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="纸箱"
+                android:textSize="12dp"
+                android:layout_marginTop="3dp"
+                android:gravity="center"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/workOrder_main"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <ImageView
+                android:id="@+id/workOrder_image"
+                android:src="@drawable/ic_markunread_mailbox_blue_48dp"
+                android:layout_width="30dip"
+                android:layout_height="30dip"
+                android:layout_gravity="center"/>
+            <TextView
+                android:id="@+id/workOrder_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="工单"
+                android:textSize="12dp"
+                android:layout_marginTop="3dp"
+                android:gravity="center"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
