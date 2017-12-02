@@ -5,4 +5,8 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorselectedFragment">#424897</color>
     <color name="colornoselectedFragment">#000</color>
+    <color name="colorwarning">#ff4043</color>
+
+    <color name="black_semi_transparent">#B2000000</color>
+    <color name="text">#FFFFFF</color>
 </resources>

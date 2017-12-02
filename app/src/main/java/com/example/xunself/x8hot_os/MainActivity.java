@@ -53,38 +53,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         network_status = intent.getIntExtra("network_status",0);
         Log.d("network_status",network_status+"");
         init();
-//        imageButton = (ImageButton) findViewById(R.id.popup_button);
-//        imageButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                PopupMenu popupMenu = new PopupMenu(MainActivity.this,imageButton);
-//                popupMenu.getMenuInflater().inflate(R.menu.popup_menu,popupMenu.getMenu());
-//                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                    @Override
-//                    public boolean onMenuItemClick(MenuItem item) {
-//                        switch (item.getItemId()){
-//                            case R.id.add_item:
-//                                Toast.makeText(MainActivity.this,"add",Toast.LENGTH_SHORT).show();
-//                                break;
-//                            case R.id.about_item:
-//                                Toast.makeText(MainActivity.this,"about",Toast.LENGTH_SHORT).show();
-//                                break;
-//                            default:
-//                                break;
-//                        }
-//                        return true;
-//                    }
-//                });
-//                popupMenu.show();
-//
-//            }
-//        });
     }
 
     /**
      * 初始化
      */
     private void init(){
+        if (getSupportActionBar() != null)
+            getSupportActionBar().hide();
         boxsLinearLayout = (LinearLayout) findViewById(R.id.boxs_main);
         workOrderLinearLayout = (LinearLayout) findViewById(R.id.workOrder_main);
         boxsText = (TextView) findViewById(R.id.boxs_text);

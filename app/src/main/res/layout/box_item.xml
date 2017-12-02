@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="1dp"
+    android:id="@+id/box_item_layout">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -24,7 +26,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="HD667232"
-                    android:textSize="20dp"
+                    android:textSize="15dp"
                     android:gravity="center"
                     android:textColor="#424897"/>
             </LinearLayout>
@@ -35,8 +37,8 @@
                 <ImageButton
                     android:id="@+id/popup_button"
                     android:src="@drawable/popup_selected"
-                    android:layout_width="30dip"
-                    android:layout_height="30dip"
+                    android:layout_width="25dip"
+                    android:layout_height="25dip"
                     android:scaleType="centerInside"
                     android:background="#fff"
                     android:layout_gravity="right" />
@@ -54,12 +56,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="剩余纸箱："
-                    android:textSize="20dp"
+                    android:textSize="15dp"
                     android:textColor="#424897"/>
                 <TextView
                     android:id="@+id/boxs_nhnum"
                     android:text="1000"
-                    android:textSize="20dp"
+                    android:textSize="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -75,23 +77,31 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="剩余材料："
-                        android:textSize="20dp"
+                        android:textSize="15dp"
                         android:textColor="#424897"/>
                     <TextView
                         android:id="@+id/data_hnum"
                         android:text="1000"
-                        android:textSize="20dp"
+                        android:textSize="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp">
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp">
+                    <ImageView
+                        android:id="@+id/data_warning_image"
+                        android:src="@drawable/ic_warning_red_48dp"
+                        android:layout_width="25dip"
+                        android:layout_height="25dip" />
                     <TextView
                         android:id="@+id/data_nhnum"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/colorwarning"
                         android:text="(仍需订100份材料)"
+                        android:textSize="16dp"
+                        android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
