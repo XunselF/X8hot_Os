@@ -20,6 +20,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"/>
                 <TextView
+                    android:id="@+id/boxs_id"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="HD667232"
@@ -56,6 +57,7 @@
                     android:textSize="20dp"
                     android:textColor="#424897"/>
                 <TextView
+                    android:id="@+id/boxs_nhnum"
                     android:text="1000"
                     android:textSize="20dp"
                     android:layout_width="wrap_content"
@@ -76,6 +78,7 @@
                         android:textSize="20dp"
                         android:textColor="#424897"/>
                     <TextView
+                        android:id="@+id/data_hnum"
                         android:text="1000"
                         android:textSize="20dp"
                         android:layout_width="wrap_content"
@@ -86,6 +89,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp">
                     <TextView
+                        android:id="@+id/data_nhnum"
                         android:textColor="@color/colorAccent"
                         android:text="(仍需订100份材料)"
                         android:layout_width="wrap_content"
