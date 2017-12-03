@@ -1,6 +1,7 @@
 package com.example.xunself.x8hot_os;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
@@ -27,6 +28,8 @@ import android.widget.Toast;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
+import org.litepal.crud.DataSupport;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +44,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
     private List<Box> boxsList;                                     //数据
     private List<Box> beforeBoxsList;                               //历史纪录
 
-    private String[] boxsId ={"HD1111","HD2222","HD3333","HD4444"};         //纸箱型号
+    private List<String> boxsId;         //纸箱型号
 
 
     private RecyclerView boxRecyclerView;
@@ -101,8 +104,8 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
             @Override
             public boolean onQueryTextChange(String s) {    //输入时文字变化
                 boxsList.clear();                                                       //清空数据
-                for (int i = 0; i < boxsId.length; i++){
-                    if (boxsId[i].toUpperCase().indexOf(s.toUpperCase()) != -1){        //忽略大小写，当包含该字符串 加入数据
+                for (int i = 0; i < boxsId.size(); i++){
+                    if (boxsId.get(i).toUpperCase().indexOf(s.toUpperCase()) != -1){        //忽略大小写，当包含该字符串 加入数据
                         boxsList.add(beforeBoxsList.get(i));
                     }
                 }
@@ -119,16 +122,12 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
     private void getBoxList(){
         beforeBoxsList = new ArrayList<>();
         boxsList = new ArrayList<>();
-        for (int i = 0; i < 1; i ++){
-            Box box1 = new Box("7544","HD1111",1000,500,200,2,"2017-12-22","备注");
-            boxsList.add(box1);
-            Box box2 = new Box("7544","HD2222",500,300,200,2.4,"2017-12-23","备注");
-            boxsList.add(box2);
-            Box box3 = new Box("7544","HD3333",1000,500,200,2.4,"2017-12-22","备注");
-            boxsList.add(box3);
-            Box box4 = new Box("7544","HD4444",1000,500,200,2.567,"2017-12-22","备注");
-            boxsList.add(box4);
-            beforeBoxsList.addAll(boxsList);
+        boxsId = new ArrayList<>();
+        boxsList = DataSupport.findAll(Box.class);
+        beforeBoxsList.addAll(boxsList);
+        for (int i = 0; i < boxsList.size(); i ++){
+            Box box = boxsList.get(i);
+            boxsId.add(box.getBox_id());
         }
     }
 
@@ -151,7 +150,8 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
                 hideInputMethod();
                 break;
             case R.id.fab_add:
-
+                Intent intent = new Intent(getContext(),AddBoxsActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;

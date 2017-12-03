@@ -1,12 +1,14 @@
 package com.example.xunself.x8hot_os;
 
+import org.litepal.crud.DataSupport;
+
 import java.io.Serializable;
 
 /**
  * Created by XunselF on 2017/12/2.
  */
 
-public class Box implements Serializable{
+public class Box extends DataSupport implements Serializable{
     private String work_id;     //订单号
     private String box_id;      //纸箱型号
     private int box_num;        //纸箱数量

@@ -19,23 +19,19 @@
             <include layout="@layout/main_title"/>
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                android:layout_height="match_parent">
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                    android:layout_height="match_parent">
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                        android:layout_height="wrap_content">
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/boxs_recyclerView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="#cfcfcf"
-                            app:layout_behavior="@string/appbar_scrolling_view_behavior"></android.support.v7.widget.RecyclerView>
+                            android:background="#cfcfcf"></android.support.v7.widget.RecyclerView>
                     </RelativeLayout>
                     <LinearLayout
                         android:id="@+id/Fragment_BoxLayout"
