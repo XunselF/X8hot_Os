@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/boxabout_toolbar"
+        android:layout_width="match_parent"
+        app:titleTextColor="#fff"
+        app:navigationIcon="@drawable/ic_chevron_left_white_24dp"
+        app:title="详情"
+        android:background="@color/colorPrimary"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginBottom="10dp"></android.support.v7.widget.Toolbar>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -128,25 +138,6 @@
         </LinearLayout>
 
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp">
-        <TextView
-            android:text="创建时间："
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"/>
-        <TextView
-            android:id="@+id/boxs_createtime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2017-12-11"
-            android:textSize="20dp"
-            android:gravity="center"
-            android:textColor="#424897"/>
-
-    </LinearLayout>
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -189,9 +180,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-
-
-
     </LinearLayout>
 </LinearLayout>
 
@@ -199,7 +187,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginBottom="10dp">
         <ImageView
             android:id="@+id/data_warning_image"
@@ -215,7 +203,42 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
-
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+        <TextView
+            android:text="备注："
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginBottom="5dp"/>
+        <TextView
+            android:id="@+id/boxs_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="倒萨倒萨大大"
+            android:gravity="center"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="10dp">
+        <TextView
+            android:text="创建时间："
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/boxs_createtime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2017-12-11"
+            android:gravity="center"/>
+    </LinearLayout>
 
 
     <LinearLayout

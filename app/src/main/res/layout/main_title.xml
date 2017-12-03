@@ -12,10 +12,11 @@
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#fff"
+            android:background="#ffffff"
+            android:layout_margin="10dp"
             android:layout_gravity="center"
             android:queryHint="请输入纸箱型号"
-            android:iconifiedByDefault="false" />
+            android:iconifiedByDefault="false"/>
 
     </LinearLayout>
 </LinearLayout>

@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -22,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import java.util.ArrayList;
@@ -45,10 +48,12 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
     private BoxsAdapter boxsAdapter;
     private android.widget.SearchView searchView;
 
+
     private LinearLayout fragmentBoxLayout;
 
 
     private FloatingActionsMenu floatingActionsMenu;
+    private FloatingActionButton addBoxButton;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -69,6 +74,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
         searchView = (android.widget.SearchView) view.findViewById(R.id.searchView);
         fragmentBoxLayout = (LinearLayout) view.findViewById(R.id.Fragment_BoxLayout);
         floatingActionsMenu = (FloatingActionsMenu) view.findViewById(R.id.fab_menu);
+        addBoxButton = (FloatingActionButton) view.findViewById(R.id.fab_add);
 
 
         boxRecyclerView = (RecyclerView) view.findViewById(R.id.boxs_recyclerView);
@@ -81,6 +87,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
          * 监听器
          */
         fragmentBoxLayout.setOnClickListener(this);
+        addBoxButton.setOnClickListener(this);
 
         /**
          * 搜索框搜索功能
@@ -103,6 +110,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
                 return true;
             }
         });
+
     }
 
     /**
@@ -142,6 +150,9 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
             case R.id.Fragment_BoxLayout:
                 hideInputMethod();
                 break;
+            case R.id.fab_add:
+
+                break;
             default:
                 break;
         }
@@ -177,7 +188,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            Box box = boxsList.get(position);
+            final Box box = boxsList.get(position);
             holder.boxItemLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -213,7 +224,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
                                 Toast.makeText(getActivity(), "add", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.about_item:
-                                Toast.makeText(getActivity(), "about", Toast.LENGTH_SHORT).show();
+                                BoxAboutActivity.actionStart(getContext(),box);
                                 break;
                             default:
                                 break;
