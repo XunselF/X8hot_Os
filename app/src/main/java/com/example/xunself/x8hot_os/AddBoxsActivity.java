@@ -6,6 +6,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -24,6 +25,7 @@ import java.util.Date;
 
 public class AddBoxsActivity extends AppCompatActivity implements View.OnClickListener{
 
+    private Toolbar AddBoxs_toolbar;
     private LinearLayout addBoxLayout;
     private TextView welcome_1;
     private TextView welcome_2;
@@ -61,6 +63,8 @@ public class AddBoxsActivity extends AppCompatActivity implements View.OnClickLi
      * 初始化
      */
     private void init(){
+        AddBoxs_toolbar = (Toolbar) findViewById(R.id.addbox_toolbar);
+        setSupportActionBar(AddBoxs_toolbar);
         welcome_1 = (TextView) findViewById(R.id.welcome_1);
         welcome_2 = (TextView) findViewById(R.id.welcome_2);
         addBoxLayout = (LinearLayout) findViewById(R.id.add_boxs_layout);

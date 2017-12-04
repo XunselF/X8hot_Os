@@ -242,6 +242,7 @@
 
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#e7e7e7">
@@ -256,6 +257,11 @@
                 android:text="该纸箱工单记录"
                 android:layout_margin="10dp"/>
     </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/box_about_item_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </android.support.v7.widget.RecyclerView>
     </LinearLayout>
 
 </LinearLayout>

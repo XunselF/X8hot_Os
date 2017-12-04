@@ -18,6 +18,9 @@ public class Box extends DataSupport implements Serializable{
     private String create_time; //时间
     private String content;     //备注
 
+    public Box(){
+
+    }
     public Box(String work_id,String box_id,int box_num,int box_hnum,int data_hnum,double box_prize,String create_time,String content){
         this.work_id = work_id;
         this.box_id = box_id;
@@ -27,6 +30,38 @@ public class Box extends DataSupport implements Serializable{
         this.box_prize = box_prize;
         this.create_time = create_time;
         this.content = content;
+    }
+
+    public void setBox_hnum(int box_hnum) {
+        this.box_hnum = box_hnum;
+    }
+
+    public void setBox_id(String box_id) {
+        this.box_id = box_id;
+    }
+
+    public void setBox_num(int box_num) {
+        this.box_num = box_num;
+    }
+
+    public void setBox_prize(double box_prize) {
+        this.box_prize = box_prize;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setCreate_time(String create_time) {
+        this.create_time = create_time;
+    }
+
+    public void setData_hnum(int data_hnum) {
+        this.data_hnum = data_hnum;
+    }
+
+    public void setWork_id(String work_id) {
+        this.work_id = work_id;
     }
 
     public int getBox_num() {

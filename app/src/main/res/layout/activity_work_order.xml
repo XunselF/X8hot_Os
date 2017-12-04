@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+   >
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="#dcdcdc"
+        android:layout_marginTop="10dp"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+        <TextView
+            android:text="在下拉框选择您的操作："
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Spinner
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:id="@+id/opera_spinner"
+            android:layout_marginTop="10dp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp">
+
+            <EditText
+                android:id="@+id/work_order_inputNum"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:background="#eaeaea"
+                android:hint="(请填写数量)"
+                android:digits="1234567890"
+                android:inputType="number"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:padding="8dp"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/work_order_changeText"
+                android:text="个纸盒"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="#dcdcdc"
+            android:layout_marginTop="20dp"/>
+        <LinearLayout
+            android:layout_gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp">
+            <TextView
+                android:id="@+id/work_order_return"
+                android:text="否"
+                android:textColor="@color/colorAccent"
+                android:layout_marginRight="60dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/work_order_commit"
+                android:text="是"
+                android:textColor="@color/colorAccent"
+                android:layout_marginRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

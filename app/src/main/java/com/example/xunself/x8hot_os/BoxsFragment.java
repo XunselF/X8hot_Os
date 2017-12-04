@@ -65,11 +65,17 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getBoxList();               //获取数据
+    }
+
+
     /**
      * 初始化
      */
     private void init(){
-        getBoxList();               //获取数据
 
         /**
          * 初始化控件
@@ -129,6 +135,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
             Box box = boxsList.get(i);
             boxsId.add(box.getBox_id());
         }
+        boxsAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -152,6 +159,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
             case R.id.fab_add:
                 Intent intent = new Intent(getContext(),AddBoxsActivity.class);
                 startActivity(intent);
+                hideInputMethod();
                 break;
             default:
                 break;
@@ -221,7 +229,8 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.add_item:
-                                Toast.makeText(getActivity(), "add", Toast.LENGTH_SHORT).show();
+                                WorkOrderActivity.actionStart(getContext(),box);
+                                hideInputMethod();
                                 break;
                             case R.id.about_item:
                                 BoxAboutActivity.actionStart(getContext(),box);

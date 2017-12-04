@@ -24,7 +24,10 @@
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".BoxAboutActivity" />
-        <activity android:name=".AddBoxsActivity"></activity>
+        <activity android:name=".AddBoxsActivity" />
+        <activity android:name=".WorkOrderActivity"
+            android:theme="@style/AlertDialogNoActionBar"
+            android:label="提交工单"></activity>
     </application>
 
 </manifest>
