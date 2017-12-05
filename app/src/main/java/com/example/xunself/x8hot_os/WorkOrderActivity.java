@@ -1,5 +1,6 @@
 package com.example.xunself.x8hot_os;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.ArrayRes;
@@ -43,6 +44,10 @@ public class WorkOrderActivity extends AppCompatActivity implements View.OnClick
     private final int CREATE_NEW_ORDER = 0;
     private final int CARRY_BOX_NUMBER = 1;
     private final int ADD_DATA_NUMBER = 2;
+
+
+    private final int NOT_CARRY_OUT = 0;
+    private final int CARRY_OUT = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,14 +106,13 @@ public class WorkOrderActivity extends AppCompatActivity implements View.OnClick
                 }else{
                     int input = Integer.parseInt(inputText.trim());
                     updateData(input);
-                    Toast.makeText(WorkOrderActivity.this,"修改成功",Toast.LENGTH_SHORT).show();
                     finish();
                 }
-
                 break;
         }
     }
     private void updateData(int input){
+        int isCarryOut = 0;
         WorkOrder workOrder;
         Box updateBox;
         getTime();
@@ -118,21 +122,42 @@ public class WorkOrderActivity extends AppCompatActivity implements View.OnClick
                 workOrder.save();
                 updateBox = mBox;
                 updateBox.setBox_num(mBox.getBox_num() + input);
+                updateBox.setToDefault("isCarryOut");
                 updateBox.updateAll("box_id = ? and work_id = ?",box_id,work_id);
+
                 break;
             case CARRY_BOX_NUMBER:
-                workOrder = new WorkOrder(work_id,box_id,workOrder_status,input,0,mUpdateTime);
-                workOrder.save();
-                if (input + box_hnum > box_num ) {
+                if (data_hnum < input){
+                    Toast.makeText(WorkOrderActivity.this,"材料不够！",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (input + box_hnum >= box_num ) {
+                    data_hnum = 0;
                     input = box_num;
-                }else{
+                    isCarryOut = CARRY_OUT;
+
+                } else{
+                    data_hnum = data_hnum - input;
                     input = input + box_hnum;
                 }
+                workOrder = new WorkOrder(work_id,box_id,workOrder_status,input,0,mUpdateTime);
+                workOrder.save();
                 updateBox = mBox;
+                updateBox.setIsCarryOut(isCarryOut);
+                if (data_hnum == 0){
+                    updateBox.setToDefault("data_hnum");
+                }else{
+                    updateBox.setData_hnum(data_hnum);
+                }
                 updateBox.setBox_hnum(input);
                 updateBox.updateAll("box_id = ? and work_id = ?",box_id,work_id);
                 break;
             case ADD_DATA_NUMBER:
+                if (data_hnum + input > box_num - box_hnum){
+                    Toast.makeText(WorkOrderActivity.this,"所填材料已超过数量！",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 workOrder = new WorkOrder(work_id,box_id,workOrder_status,0,input,mUpdateTime);
                 workOrder.save();
                 updateBox = mBox;
@@ -141,6 +166,20 @@ public class WorkOrderActivity extends AppCompatActivity implements View.OnClick
                 break;
             default:
                 break;
+        }
+        Toast.makeText(WorkOrderActivity.this,"修改成功",Toast.LENGTH_SHORT).show();
+    }
+    private void showCarryOutDialog(int carryStatus){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("提示：");
+        dialog.setMessage("您的工单已经完成！");
+        dialog.setCancelable(true);
+        switch (carryStatus){
+            case CARRY_OUT:
+                dialog.show();
+                break;
+                default:
+                    break;
         }
     }
 

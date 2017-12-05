@@ -57,6 +57,10 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
 
     private FloatingActionsMenu floatingActionsMenu;
     private FloatingActionButton addBoxButton;
+    private FloatingActionButton recordBoxButton;
+
+    private final int NOT_CARRY_OUT = 0;                                        //工单未完成
+    private final int CARRY_OUT = 1;                                            //工单已完成
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -84,7 +88,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
         fragmentBoxLayout = (LinearLayout) view.findViewById(R.id.Fragment_BoxLayout);
         floatingActionsMenu = (FloatingActionsMenu) view.findViewById(R.id.fab_menu);
         addBoxButton = (FloatingActionButton) view.findViewById(R.id.fab_add);
-
+        recordBoxButton = (FloatingActionButton) view.findViewById(R.id.fab_record);
 
         boxRecyclerView = (RecyclerView) view.findViewById(R.id.boxs_recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -97,6 +101,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
          */
         fragmentBoxLayout.setOnClickListener(this);
         addBoxButton.setOnClickListener(this);
+        recordBoxButton.setOnClickListener(this);
 
         /**
          * 搜索框搜索功能
@@ -152,12 +157,18 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
     }
     @Override
     public void onClick(View view) {
+        Intent intent;
         switch (view.getId()){
             case R.id.Fragment_BoxLayout:
                 hideInputMethod();
                 break;
             case R.id.fab_add:
-                Intent intent = new Intent(getContext(),AddBoxsActivity.class);
+                intent = new Intent(getContext(),AddBoxsActivity.class);
+                startActivity(intent);
+                hideInputMethod();
+                break;
+            case R.id.fab_record:
+                intent = new Intent(getContext(),RecordActivity.class);
                 startActivity(intent);
                 hideInputMethod();
                 break;
@@ -169,6 +180,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
     class BoxsAdapter extends RecyclerView.Adapter<BoxsAdapter.ViewHolder>{
         class ViewHolder extends RecyclerView.ViewHolder{
             LinearLayout boxItemLayout;
+            TextView box_carryStatus;                       //纸箱完成状态
             TextView boxId;
             TextView boxNHnum;
             TextView dataHnum;
@@ -184,6 +196,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
                 dataNHnum = (TextView) itemView.findViewById(R.id.data_nhnum);
                 boxMessageMenu = (ImageButton) itemView.findViewById(R.id.popup_button);
                 dataWarningImage = (ImageView) itemView.findViewById(R.id.data_warning_image);
+                box_carryStatus = (TextView) itemView.findViewById(R.id.boxs_carryStatus);
             }
         }
 
@@ -203,6 +216,13 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
                     hideInputMethod();
                 }
             });
+            if (box.getIsCarryOut() == NOT_CARRY_OUT){
+                holder.box_carryStatus.setText("(未完成)");
+                holder.box_carryStatus.setTextColor(getResources().getColor(R.color.boxnocarryout));
+            }else if (box.getIsCarryOut() == CARRY_OUT){
+                holder.box_carryStatus.setText("(已完成)");
+                holder.box_carryStatus.setTextColor(getResources().getColor(R.color.boxcarryout));
+            }
             int boxNHnum = box.getBox_num() - box.getBox_hnum();                        //还剩箱子数量
             int dataNHnum = boxNHnum - box.getData_hnum();                              //材料剩余数量
             holder.boxId.setText(box.getBox_id());
@@ -234,6 +254,9 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
                                 break;
                             case R.id.about_item:
                                 BoxAboutActivity.actionStart(getContext(),box);
+                                break;
+                            case R.id.delete_item:
+                                DeleteActivity.actionStart(getContext(),box);
                                 break;
                             default:
                                 break;

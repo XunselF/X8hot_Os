@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private final int BOXS_FRAGMENT = 1;
     private final int WORKORDER_FRAGMENT = 2;
 
-    private int network_status;
+
 
 
     private ImageButton imageButton;
@@ -49,9 +49,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent intent = getIntent();
-        network_status = intent.getIntExtra("network_status",0);
-        Log.d("network_status",network_status+"");
         init();
     }
 

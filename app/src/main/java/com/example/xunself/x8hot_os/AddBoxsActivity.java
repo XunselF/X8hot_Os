@@ -51,6 +51,8 @@ public class AddBoxsActivity extends AppCompatActivity implements View.OnClickLi
     private Button finallyCommitButton;
     private Button backButton;
 
+    private final int NOT_CARRY_OUT = 0;
+    private final int CARRY_OUT = 1;
     private boolean isInputMoreMessage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -261,7 +263,7 @@ public class AddBoxsActivity extends AppCompatActivity implements View.OnClickLi
         commitText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Box box = new Box(mWorkId,mBoxId,mBoxNumber,mBoxHNumber,mDataHNumber,mBoxPrize,mBoxCreateTime,mBoxContent);
+                Box box = new Box(mWorkId,mBoxId,mBoxNumber,mBoxHNumber,mDataHNumber,mBoxPrize,mBoxCreateTime,mBoxContent,NOT_CARRY_OUT);
                 box.save();
                 Toast.makeText(AddBoxsActivity.this,"提交成功！",Toast.LENGTH_SHORT).show();
                 dialogContent.dismiss();

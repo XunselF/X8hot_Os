@@ -29,6 +29,14 @@
                     android:textSize="15dp"
                     android:gravity="center"
                     android:textColor="#424897"/>
+                <TextView
+                    android:id="@+id/boxs_carryStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(已完成)"
+                    android:textSize="15dp"
+                    android:gravity="center"
+                    android:textColor="#de615a"/>
             </LinearLayout>
             <LinearLayout
                 android:orientation="vertical"

@@ -12,6 +12,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/Fragment_BoxLayout"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -19,34 +20,39 @@
             <include layout="@layout/main_title"/>
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/boxs_recyclerView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="#cfcfcf"></android.support.v7.widget.RecyclerView>
-                    </RelativeLayout>
+                android:layout_height="wrap_content">
                     <LinearLayout
-                        android:id="@+id/Fragment_BoxLayout"
                         android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="100dp">
-                        <TextView
-                            android:text="已经到底部"
-                            android:layout_gravity="center"
-                            android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:background="#cfcfcf">
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
+                            android:layout_height="wrap_content">
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/boxs_recyclerView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                ></android.support.v7.widget.RecyclerView>
+                        </RelativeLayout>
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:layout_marginTop="0.1dp"
+                            android:background="#fff">
+                            <TextView
+                                android:text="已经到底部"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </LinearLayout>
+
                     </LinearLayout>
-                </LinearLayout>
+
             </ScrollView>
+
         </LinearLayout>
     </FrameLayout>
 
@@ -57,10 +63,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="10dp"
         fab:fab_addButtonColorNormal="@color/colorselectedFragment"
         fab:fab_labelStyle="@style/menu_labels_style"
-        fab:fab_labelsPosition="left">
+        fab:fab_labelsPosition="left"
+        android:layout_margin="10dp">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"

@@ -4,4 +4,6 @@
         android:title="提交工单"/>
     <item android:id="@+id/about_item"
         android:title="详细"/>
+    <item android:id="@+id/delete_item"
+        android:title="删除"/>
 </menu>

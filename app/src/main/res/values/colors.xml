@@ -9,4 +9,7 @@
 
     <color name="black_semi_transparent">#B2000000</color>
     <color name="text">#FFFFFF</color>
+
+    <color name="boxcarryout">#5edc7b</color>
+    <color name="boxnocarryout">#de615a</color>
 </resources>

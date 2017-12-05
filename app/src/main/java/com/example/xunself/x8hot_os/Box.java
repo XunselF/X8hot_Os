@@ -17,11 +17,12 @@ public class Box extends DataSupport implements Serializable{
     private double box_prize;     //纸箱单价
     private String create_time; //时间
     private String content;     //备注
+    private int isCarryOut;    //是否完成
 
     public Box(){
 
     }
-    public Box(String work_id,String box_id,int box_num,int box_hnum,int data_hnum,double box_prize,String create_time,String content){
+    public Box(String work_id,String box_id,int box_num,int box_hnum,int data_hnum,double box_prize,String create_time,String content,int isCarryOut){
         this.work_id = work_id;
         this.box_id = box_id;
         this.box_num = box_num;
@@ -30,6 +31,15 @@ public class Box extends DataSupport implements Serializable{
         this.box_prize = box_prize;
         this.create_time = create_time;
         this.content = content;
+        this.isCarryOut = isCarryOut;
+    }
+
+    public int getIsCarryOut() {
+        return isCarryOut;
+    }
+
+    public void setIsCarryOut(int isCarryOut) {
+        this.isCarryOut = isCarryOut;
     }
 
     public void setBox_hnum(int box_hnum) {

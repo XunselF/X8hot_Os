@@ -15,17 +15,12 @@ public class SplashActivity extends AppCompatActivity {
 
     private Handler splashDelayHandler;
 
-    private int networkStatus;
-
-    private final int NETWORK_UNAVAILABLE = 0;
-    private final int NETWORK_AVAILABLE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);        //全屏模式
         setContentView(R.layout.activity_splash);
-        getNetworkStatus();
         splashDelay();
         if (getSupportActionBar() != null){
             getSupportActionBar().hide();
@@ -38,20 +33,9 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);                             //退出全屏模式
                 Intent intent = new Intent(SplashActivity.this,MainActivity.class);
-                intent.putExtra("network_status",networkStatus);
                 startActivity(intent);
                 finish();
             }
         },SPLASH_DISPLAY_LENGTH);
-    }
-    private void getNetworkStatus(){
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isAvailable()){
-            networkStatus = NETWORK_AVAILABLE;
-        }else{
-            networkStatus = NETWORK_UNAVAILABLE;
-        }
-
     }
 }
