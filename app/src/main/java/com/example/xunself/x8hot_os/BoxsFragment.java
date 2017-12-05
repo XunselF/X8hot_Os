@@ -224,6 +224,8 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
                 holder.box_carryStatus.setTextColor(getResources().getColor(R.color.boxcarryout));
             }
             int boxNHnum = box.getBox_num() - box.getBox_hnum();                        //还剩箱子数量
+            if (boxNHnum < 0)
+                boxNHnum = 0;
             int dataNHnum = boxNHnum - box.getData_hnum();                              //材料剩余数量
             holder.boxId.setText(box.getBox_id());
             holder.boxNHnum.setText(boxNHnum + "");

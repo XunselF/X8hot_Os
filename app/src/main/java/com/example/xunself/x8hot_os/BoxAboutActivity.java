@@ -134,7 +134,11 @@ public class BoxAboutActivity extends AppCompatActivity {
      * 获取数据源
      */
     private void getBoxData(){
+
         int boxNHnum = seletedBox.getBox_num() - seletedBox.getBox_hnum();                        //还剩箱子数量
+        if (boxNHnum < 0){
+            boxNHnum = 0;
+        }
         int dataNHnum = boxNHnum - seletedBox.getData_hnum();                              //材料剩余数量
         String sumprize = String.format("%.2f",seletedBox.getBox_prize() * (double)seletedBox.getBox_num() );
         box_idText.setText(seletedBox.getBox_id());

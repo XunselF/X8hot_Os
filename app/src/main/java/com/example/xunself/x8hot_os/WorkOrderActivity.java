@@ -131,18 +131,13 @@ public class WorkOrderActivity extends AppCompatActivity implements View.OnClick
                     Toast.makeText(WorkOrderActivity.this,"材料不够！",Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                if (input + box_hnum >= box_num ) {
-                    data_hnum = 0;
-                    input = box_num;
-                    isCarryOut = CARRY_OUT;
-
-                } else{
-                    data_hnum = data_hnum - input;
-                    input = input + box_hnum;
-                }
                 workOrder = new WorkOrder(work_id,box_id,workOrder_status,input,0,mUpdateTime);
                 workOrder.save();
+                if (input + box_hnum >= box_num ) {
+                    isCarryOut = CARRY_OUT;
+                }
+                data_hnum = data_hnum - input;
+                input = input + box_hnum;
                 updateBox = mBox;
                 updateBox.setIsCarryOut(isCarryOut);
                 if (data_hnum == 0){
@@ -154,10 +149,6 @@ public class WorkOrderActivity extends AppCompatActivity implements View.OnClick
                 updateBox.updateAll("box_id = ? and work_id = ?",box_id,work_id);
                 break;
             case ADD_DATA_NUMBER:
-                if (data_hnum + input > box_num - box_hnum){
-                    Toast.makeText(WorkOrderActivity.this,"所填材料已超过数量！",Toast.LENGTH_SHORT).show();
-                    return;
-                }
                 workOrder = new WorkOrder(work_id,box_id,workOrder_status,0,input,mUpdateTime);
                 workOrder.save();
                 updateBox = mBox;
@@ -169,19 +160,7 @@ public class WorkOrderActivity extends AppCompatActivity implements View.OnClick
         }
         Toast.makeText(WorkOrderActivity.this,"修改成功",Toast.LENGTH_SHORT).show();
     }
-    private void showCarryOutDialog(int carryStatus){
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("提示：");
-        dialog.setMessage("您的工单已经完成！");
-        dialog.setCancelable(true);
-        switch (carryStatus){
-            case CARRY_OUT:
-                dialog.show();
-                break;
-                default:
-                    break;
-        }
-    }
+
 
     private void changeUi(){
         switch (workOrder_status){
