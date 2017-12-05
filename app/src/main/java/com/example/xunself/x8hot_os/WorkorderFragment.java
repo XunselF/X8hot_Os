@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -36,5 +37,36 @@ public class WorkorderFragment extends Fragment {
         workOrderRecyclerView = (RecyclerView) view.findViewById(R.id.work_order_recyclerview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         workOrderRecyclerView.setLayoutManager(linearLayoutManager);
+    }
+    class WorkOrderAdapter extends RecyclerView.Adapter<WorkOrderAdapter.ViewHolder>{
+
+        class ViewHolder extends RecyclerView.ViewHolder{
+            TextView work_id;               //工单号
+            TextView work_money;            //总金额
+            RecyclerView work_recyclerview;     //用于显示工单每个纸箱
+            public ViewHolder(View itemView) {
+                super(itemView);
+                work_id = (TextView) itemView.findViewById(R.id.work_id);
+                work_money = (TextView) itemView.findViewById(R.id.work_money);
+                work_recyclerview = (RecyclerView) itemView.findViewById(R.id.work_box_recyclerview);
+            }
+        }
+        @Override
+        public WorkOrderAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(getContext()).inflate(R.layout.work_order_item,parent,false);
+            ViewHolder holder = new ViewHolder(view);
+            return holder;
+        }
+
+        @Override
+        public void onBindViewHolder(WorkOrderAdapter.ViewHolder holder, int position) {
+            Box box = boxList.get(position);
+            holder.work_id.setText(box.getWork_id());
+        }
+
+        @Override
+        public int getItemCount() {
+            return 0;
+        }
     }
 }
