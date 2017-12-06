@@ -1,12 +1,15 @@
 package com.example.xunself.x8hot_os;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -56,8 +59,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 初始化
      */
     private void init(){
-        if (getSupportActionBar() != null)
-            getSupportActionBar().hide();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
         boxsLinearLayout = (LinearLayout) findViewById(R.id.boxs_main);
         workOrderLinearLayout = (LinearLayout) findViewById(R.id.workOrder_main);
         boxsText = (TextView) findViewById(R.id.boxs_text);
@@ -104,4 +107,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         transaction.commit();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return true;
+    }
+
 }

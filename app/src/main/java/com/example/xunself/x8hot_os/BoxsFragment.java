@@ -1,11 +1,14 @@
 package com.example.xunself.x8hot_os;
 
+import android.app.Activity;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
@@ -14,10 +17,13 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -41,6 +47,8 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
 
     private View view;
 
+    private Toolbar main_toolbar;
+
     private List<Box> boxsList;                                     //数据
     private List<Box> beforeBoxsList;                               //历史纪录
 
@@ -49,7 +57,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
 
     private RecyclerView boxRecyclerView;
     private BoxsAdapter boxsAdapter;
-    private android.widget.SearchView searchView;
+    private SearchView searchView;
 
 
     private LinearLayout fragmentBoxLayout;
@@ -65,6 +73,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_boxs,container,false);
+        setHasOptionsMenu(true);
         init();
         return view;
     }
@@ -76,6 +85,51 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
     }
 
 
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        getActivity().getMenuInflater().inflate(R.menu.main_menu,menu);
+        MenuItem menuItem = menu.findItem(R.id.action_search);//在菜单中找到对应控件的item
+        searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        ImageView searchButton = (ImageView) searchView.findViewById(R.id.search_button);
+        EditText textview = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        textview.setTextColor(getResources().getColor(R.color.text));
+        searchView.setQueryHint("请输入纸箱型号：");
+        searchButton.setImageResource(R.drawable.ic_search_white_24dp);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {                          //通过搜索进行检测符合的数据
+                boxsList.clear();                                                       //清空数据
+                for (int i = 0; i < boxsId.size(); i++){
+                    if (boxsId.get(i).toUpperCase().indexOf(newText.toUpperCase()) != -1){        //忽略大小写，当包含该字符串 加入数据
+                        boxsList.add(beforeBoxsList.get(i));
+                    }
+                }
+                boxsAdapter.notifyDataSetChanged() ;                                    //更新数据
+                return true;
+            }
+        });
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_search:
+
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
+
     /**
      * 初始化
      */
@@ -84,7 +138,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
         /**
          * 初始化控件
          */
-        searchView = (android.widget.SearchView) view.findViewById(R.id.searchView);
+        main_toolbar = (Toolbar) getActivity().findViewById(R.id.main_toolbar);
         fragmentBoxLayout = (LinearLayout) view.findViewById(R.id.Fragment_BoxLayout);
         floatingActionsMenu = (FloatingActionsMenu) view.findViewById(R.id.fab_menu);
         addBoxButton = (FloatingActionButton) view.findViewById(R.id.fab_add);
@@ -106,24 +160,18 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
         /**
          * 搜索框搜索功能
          */
-        searchView.setOnQueryTextListener(new android.widget.SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) { //搜索后功能
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {    //输入时文字变化
-                boxsList.clear();                                                       //清空数据
-                for (int i = 0; i < boxsId.size(); i++){
-                    if (boxsId.get(i).toUpperCase().indexOf(s.toUpperCase()) != -1){        //忽略大小写，当包含该字符串 加入数据
-                        boxsList.add(beforeBoxsList.get(i));
-                    }
-                }
-                boxsAdapter.notifyDataSetChanged() ;                                    //更新数据
-                return true;
-            }
-        });
+//        searchView.setOnQueryTextListener(new android.widget.SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String s) { //搜索后功能
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String s) {    //输入时文字变化
+//
+//                return true;
+//            }
+//        });
 
     }
 
