@@ -88,21 +88,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initFramgent(int fragment_Tag){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (fragment_Tag == BOXS_FRAGMENT){
-            if (BoxsFragment == null || WorkorderFragment == null){
                 BoxsFragment = new BoxsFragment();
-                transaction.add(R.id.main_frameLayout,BoxsFragment);
-                WorkorderFragment = new WorkorderFragment();
-                transaction.add(R.id.main_frameLayout,WorkorderFragment);
-            }
-            transaction.hide(WorkorderFragment);
-            transaction.show(BoxsFragment);
+            transaction.replace(R.id.main_frameLayout,BoxsFragment);
             boxsImage.setImageResource(R.drawable.ic_dns_blue_48dp);
             boxsText.setTextColor(getResources().getColor(R.color.colorselectedFragment));
             workOrderImage.setImageResource(R.drawable.ic_markunread_mailbox_black_48dp);
             workOrderText.setTextColor(getResources().getColor(R.color.colornoselectedFragment));
         }else if(fragment_Tag == WORKORDER_FRAGMENT){
-            transaction.hide(BoxsFragment);
-            transaction.show(WorkorderFragment);
+            WorkorderFragment = new WorkorderFragment();
+            transaction.replace(R.id.main_frameLayout,WorkorderFragment);
             boxsImage.setImageResource(R.drawable.ic_dns_black_48dp);
             boxsText.setTextColor(getResources().getColor(R.color.colornoselectedFragment));
             workOrderImage.setImageResource(R.drawable.ic_markunread_mailbox_blue_48dp);
