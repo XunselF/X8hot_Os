@@ -30,9 +30,13 @@
             android:label="提交工单"
             android:theme="@style/AlertDialogNoActionBar" />
         <activity android:name=".RecordActivity" />
-        <activity android:name=".DeleteActivity"
+        <activity
+            android:name=".DeleteActivity"
             android:label="删除！"
-            android:theme="@style/AlertDialogNoActionBar" ></activity>
+            android:theme="@style/AlertDialogNoActionBar" />
+        <activity android:name=".WorkOrderDeleteActivity"
+            android:theme="@style/AlertDialogNoActionBar"
+            android:label="删除！"></activity>
     </application>
 
 </manifest>

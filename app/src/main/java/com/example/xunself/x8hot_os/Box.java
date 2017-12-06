@@ -9,6 +9,7 @@ import java.io.Serializable;
  */
 
 public class Box extends DataSupport implements Serializable{
+    private int id;
     private String work_id;     //订单号
     private String box_id;      //纸箱型号
     private int box_num;        //纸箱数量
@@ -19,10 +20,14 @@ public class Box extends DataSupport implements Serializable{
     private String content;     //备注
     private int isCarryOut;    //是否完成
 
-    public Box(){
+    public int getId() {
+        return id;
+    }
+
+    public  Box(){
 
     }
-    public Box(String work_id,String box_id,int box_num,int box_hnum,int data_hnum,double box_prize,String create_time,String content,int isCarryOut){
+    public Box(String work_id, String box_id, int box_num, int box_hnum, int data_hnum, double box_prize, String create_time, String content, int isCarryOut){
         this.work_id = work_id;
         this.box_id = box_id;
         this.box_num = box_num;

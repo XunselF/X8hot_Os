@@ -13,8 +13,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.litepal.crud.DataSupport;
 
@@ -172,12 +175,14 @@ public class BoxAboutActivity extends AppCompatActivity {
     class BoxWorkOrderAdapter extends RecyclerView.Adapter<BoxWorkOrderAdapter.ViewHolder>{
 
         class ViewHolder extends RecyclerView.ViewHolder{
+            LinearLayout workOrder_layout;
             TextView workOrder_time;
             TextView workOrder_status;
             TextView workOrder_number;
             TextView workOrder_Text;
             public ViewHolder(View itemView) {
                 super(itemView);
+                workOrder_layout = (LinearLayout) itemView.findViewById(R.id.box_about_layout);
                 workOrder_time = (TextView) itemView.findViewById(R.id.box_update_time);
                 workOrder_status = (TextView) itemView.findViewById(R.id.box_udpate_status);
                 workOrder_number = (TextView) itemView.findViewById(R.id.box_udpate_number);
@@ -193,8 +198,8 @@ public class BoxAboutActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(BoxWorkOrderAdapter.ViewHolder holder, int position) {
-            WorkOrder workOrder = workOrderList.get(workOrderList.size() - 1 - position);
+        public void onBindViewHolder(final ViewHolder holder, int position) {
+            final WorkOrder workOrder = workOrderList.get(workOrderList.size() - 1 - position);
             holder.workOrder_time.setText(workOrder.getUpdate_time());
             switch (workOrder.getWorkOrder_status()){
                 case CREATE_NEW_ORDER:
@@ -218,6 +223,28 @@ public class BoxAboutActivity extends AppCompatActivity {
                 default:
                     break;
             }
+            holder.workOrder_layout.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    PopupMenu longClick_menu = (PopupMenu) new PopupMenu(BoxAboutActivity.this,holder.workOrder_layout);
+                    longClick_menu.getMenuInflater().inflate(R.menu.longclick_delete,longClick_menu.getMenu());
+                    longClick_menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem) {
+                            switch (menuItem.getItemId()){
+                                case R.id.longclick_delete:
+                                    WorkOrderDeleteActivity.actionStart(BoxAboutActivity.this,workOrder);
+                                    break;
+                                    default:
+                                        break;
+                            }
+                            return true;
+                        }
+                    });
+                    longClick_menu.show();
+                    return true;
+                }
+            });
         }
 
         @Override

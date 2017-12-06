@@ -103,7 +103,7 @@ public class WorkorderFragment extends Fragment {
             footerText.setText("当前没有工单数据~");
         }else{
             getBoxWorkId();                                               //当执行完数据之后再执行获取工单
-            footerText.setText("当前有" + boxWorkIdList.size() + "工单数据~");
+            footerText.setText("当前有" + boxWorkIdList.size() + "条工单数据~");
         }
     }
     /**

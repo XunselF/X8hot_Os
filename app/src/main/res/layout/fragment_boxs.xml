@@ -49,7 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        fab:fab_addButtonColorNormal="@color/colorselectedFragment"
+        fab:fab_addButtonColorNormal="@color/colorPrimaryDark"
         fab:fab_labelStyle="@style/menu_labels_style"
         fab:fab_labelsPosition="left"
         android:layout_margin="10dp">
@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/fab_add"
-            fab:fab_colorNormal="@color/colorselectedFragment"
+            fab:fab_colorNormal="@color/colorPrimary"
             fab:fab_size="mini"
             fab:fab_icon="@drawable/ic_add_white_36dp"
             fab:fab_title="添加新的工单"/>
@@ -66,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/fab_record"
-            fab:fab_colorNormal="@color/colorselectedFragment"
+            fab:fab_colorNormal="@color/colorPrimary"
             fab:fab_size="mini"
             fab:fab_icon="@drawable/ic_card_giftcard_white_36dp"
             fab:fab_title="查看提交记录"/>

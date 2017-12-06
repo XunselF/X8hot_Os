@@ -2,11 +2,14 @@ package com.example.xunself.x8hot_os;
 
 import org.litepal.crud.DataSupport;
 
+import java.io.Serializable;
+
 /**
  * Created by XunselF on 2017/12/4.
  */
 
-public class WorkOrder extends DataSupport {
+public class WorkOrder extends DataSupport implements Serializable {
+    private int id;
     private String work_id;     //订单号
     private String box_id;      //纸箱型号
     private int workOrder_status;       //工单状态
@@ -14,7 +17,11 @@ public class WorkOrder extends DataSupport {
     private int update_DataNumber;      //更改的材料数据
     private String update_time;
 
-    public WorkOrder(String work_id,String box_id,int workOrder_status,int update_BoxNumber,int update_DataNumber,String update_time){
+    public int getId() {
+        return id;
+    }
+
+    public WorkOrder(String work_id, String box_id, int workOrder_status, int update_BoxNumber, int update_DataNumber, String update_time){
         this.work_id = work_id;
         this.box_id = box_id;
         this.workOrder_status = workOrder_status;
@@ -22,6 +29,7 @@ public class WorkOrder extends DataSupport {
         this.update_DataNumber = update_DataNumber;
         this.update_time = update_time;
     }
+
 
     public String getUpdate_time() {
         return update_time;

@@ -15,32 +15,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp">
-        <TextView
-            android:text="慎重！删除工单之后就无法恢复该工单"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#000"
-            android:textSize="18dp"/>
 
-        <TextView
-            android:text="确定删除后请输入该纸箱型号："
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#000"
-            android:textSize="18dp"
-            android:layout_marginTop="10dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/ic_warning_red_48dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+            <TextView
+                android:text="慎重！删除之后就无法恢复该工单"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:layout_gravity="center"
+                android:textSize="18dp"/>
+        </LinearLayout>
 
-        <EditText
-            android:id="@+id/input_delete_order"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:background="#eaeaea"
-            android:hint="请填写型号："
-            android:maxLength="30"
-            android:maxLines="1"
-            android:padding="8dp"
-            android:textSize="14dp"
-            android:layout_marginTop="15dp"/>
+
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.1dp"
@@ -53,7 +46,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp">
             <TextView
-                android:id="@+id/delete_button"
+                android:id="@+id/delete_work_order"
                 android:text="删除"
                 android:textColor="@color/colorAccent"
                 android:layout_marginRight="60dp"
