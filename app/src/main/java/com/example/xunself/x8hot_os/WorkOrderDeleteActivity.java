@@ -105,17 +105,30 @@ public class WorkOrderDeleteActivity extends AppCompatActivity implements View.O
         switch (workOrder_status){
             case CREATE_NEW_ORDER:
                 update_boxNum -= workOrder_boxNumber;
-                update_box.setBox_num(update_boxNum);
+                if (update_boxHNum == 0)
+                    update_box.setToDefault("box_num");
+                else
+                    update_box.setBox_num(update_boxNum);
                 break;
             case CARRY_BOX_NUMBER:
                 update_boxHNum -= workOrder_boxNumber;
                 update_dataHNum += workOrder_boxNumber;
-                update_box.setBox_hnum(update_boxHNum);
-                update_box.setData_hnum(update_dataHNum);
+                if (update_boxHNum == 0)
+                    update_box.setToDefault("box_hnum");
+                else
+                    update_box.setBox_hnum(update_boxHNum);
+                if (update_dataHNum == 0)
+                    update_box.setToDefault("data_hnum");
+                else
+                    update_box.setData_hnum(update_dataHNum);
                 break;
             case ADD_DATA_NUMBER:
                 update_dataHNum -= workOrder_dataNumber;
-                update_box.setData_hnum(update_dataHNum);
+                if (update_dataHNum == 0){
+                    update_box.setToDefault("data_hnum");
+                }else{
+                    update_box.setData_hnum(update_dataHNum);
+                }
                 break;
             default:
                 break;
