@@ -146,15 +146,7 @@
                         android:textColor="#fff"
                         android:visibility="gone"/>
 
-                    <Button
-                        android:id="@+id/Back_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:background="@color/colorPrimary"
-                        android:textColor="#fff"
-                        android:text="回到上一步"
-                        android:visibility="gone"/>
+
 
                     <Button
                         android:id="@+id/commit_button"

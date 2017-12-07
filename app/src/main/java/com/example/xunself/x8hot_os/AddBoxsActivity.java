@@ -49,7 +49,6 @@ public class AddBoxsActivity extends AppCompatActivity implements View.OnClickLi
     private Button commitButton;
     private Button clearButton;
     private Button finallyCommitButton;
-    private Button backButton;
 
     private final int NOT_CARRY_OUT = 0;
     private final int CARRY_OUT = 1;
@@ -80,13 +79,11 @@ public class AddBoxsActivity extends AppCompatActivity implements View.OnClickLi
         commitButton = (Button) findViewById(R.id.commit_button);
         clearButton = (Button) findViewById(R.id.clear_button);
         finallyCommitButton = (Button) findViewById(R.id.finallyCommit_button);
-        backButton = (Button) findViewById(R.id.Back_button);
 
         addBoxLayout.setOnClickListener(this);
         commitButton.setOnClickListener(this);
         clearButton.setOnClickListener(this);
         finallyCommitButton.setOnClickListener(this);
-        backButton.setOnClickListener(this);
 
         LitePal.getDatabase();
     }
@@ -140,10 +137,6 @@ public class AddBoxsActivity extends AppCompatActivity implements View.OnClickLi
             }
                 getTime();
                 showDialogContent();
-                break;
-            case R.id.Back_button:
-                isInputMoreMessage = false;
-                transformView();
                 break;
             case R.id.commit_button:
                 try{
@@ -224,7 +217,6 @@ public class AddBoxsActivity extends AppCompatActivity implements View.OnClickLi
             inputBoxHNumber.setVisibility(View.VISIBLE);
             inputDataHNumber.setVisibility(View.VISIBLE);
             finallyCommitButton.setVisibility(View.VISIBLE);
-            backButton.setVisibility(View.VISIBLE);
             inputBoxId.setVisibility(View.GONE);
             inputWorkId.setVisibility(View.GONE);
             inputBoxContent.setVisibility(View.GONE);
@@ -238,7 +230,6 @@ public class AddBoxsActivity extends AppCompatActivity implements View.OnClickLi
             inputBoxHNumber.setVisibility(View.GONE);
             inputDataHNumber.setVisibility(View.GONE);
             finallyCommitButton.setVisibility(View.GONE);
-            backButton.setVisibility(View.GONE);
             inputBoxId.setVisibility(View.VISIBLE);
             inputWorkId.setVisibility(View.VISIBLE);
             inputBoxContent.setVisibility(View.VISIBLE);
@@ -248,6 +239,17 @@ public class AddBoxsActivity extends AppCompatActivity implements View.OnClickLi
             clearButton.setVisibility(View.VISIBLE);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        if (isInputMoreMessage){
+            isInputMoreMessage = false;
+            transformView();
+        }else{
+            finish();
+        }
+    }
+
     private void showDialogContent(){
         final AlertDialog dialogContent = new AlertDialog.Builder(AddBoxsActivity.this).create();
         dialogContent.show();
