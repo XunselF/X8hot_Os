@@ -34,9 +34,13 @@
             android:name=".DeleteActivity"
             android:label="删除！"
             android:theme="@style/AlertDialogNoActionBar" />
-        <activity android:name=".WorkOrderDeleteActivity"
-            android:theme="@style/AlertDialogNoActionBar"
-            android:label="删除！"></activity>
+        <activity
+            android:name=".WorkOrderDeleteActivity"
+            android:label="删除！"
+            android:theme="@style/AlertDialogNoActionBar" />
+        <activity android:name=".WorkOrderUpdateActivity"
+            android:label="修改"
+            android:theme="@style/AlertDialogNoActionBar"></activity>
     </application>
 
 </manifest>

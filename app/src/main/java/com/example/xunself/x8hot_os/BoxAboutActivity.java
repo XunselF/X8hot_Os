@@ -211,7 +211,7 @@ public class BoxAboutActivity extends AppCompatActivity {
                 case CARRY_BOX_NUMBER:
                     holder.workOrder_status.setText("已完成");
                     holder.workOrder_number.setText(workOrder.getUpdate_BoxNumber() + "");
-                    holder.workOrder_status.setTextColor(getResources().getColor(R.color.colornoselectedFragment));
+                    holder.workOrder_status.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                     holder.workOrder_Text.setText("个纸盒");
                     break;
                 case ADD_DATA_NUMBER:
