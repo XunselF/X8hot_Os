@@ -78,7 +78,7 @@ public class WorkOrderDeleteActivity extends AppCompatActivity implements View.O
         switch (view.getId()){
             case R.id.delete_work_order:
                 delete_workOrder();
-                Toast.makeText(WorkOrderDeleteActivity.this,"",Toast.LENGTH_SHORT).show();
+                Toast.makeText(WorkOrderDeleteActivity.this,"删除成功",Toast.LENGTH_SHORT).show();
                 finish();
                 break;
             case R.id.delete_return:
@@ -105,10 +105,7 @@ public class WorkOrderDeleteActivity extends AppCompatActivity implements View.O
         switch (workOrder_status){
             case CREATE_NEW_ORDER:
                 update_boxNum -= workOrder_boxNumber;
-                if (update_boxHNum == 0)
-                    update_box.setToDefault("box_num");
-                else
-                    update_box.setBox_num(update_boxNum);
+                update_box.setBox_num(update_boxNum);
                 break;
             case CARRY_BOX_NUMBER:
                 update_boxHNum -= workOrder_boxNumber;

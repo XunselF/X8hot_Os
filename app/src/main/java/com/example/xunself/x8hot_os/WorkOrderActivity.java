@@ -101,7 +101,7 @@ public class WorkOrderActivity extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.work_order_commit:
                 String inputText = inputNum.getText().toString();
-                if (inputText == null || inputText.trim().equals("")){
+                if (inputText == null || inputText.trim().equals("") || inputText.trim().equals("0")){
                     Toast.makeText(WorkOrderActivity.this,"数量不能为空",Toast.LENGTH_SHORT).show();
                 }else{
                     int input = Integer.parseInt(inputText.trim());
@@ -127,10 +127,6 @@ public class WorkOrderActivity extends AppCompatActivity implements View.OnClick
 
                 break;
             case CARRY_BOX_NUMBER:
-                if (data_hnum < input){
-                    Toast.makeText(WorkOrderActivity.this,"材料不够！",Toast.LENGTH_SHORT).show();
-                    return;
-                }
                 workOrder = new WorkOrder(work_id,box_id,workOrder_status,input,0,mUpdateTime);
                 workOrder.save();
                 if (input + box_hnum >= box_num ) {
@@ -152,7 +148,11 @@ public class WorkOrderActivity extends AppCompatActivity implements View.OnClick
                 workOrder = new WorkOrder(work_id,box_id,workOrder_status,0,input,mUpdateTime);
                 workOrder.save();
                 updateBox = mBox;
-                updateBox.setData_hnum(input + data_hnum);
+                if (input + data_hnum == 0){
+                    updateBox.setToDefault("data_hnum");
+                }else{
+                    updateBox.setData_hnum(input + data_hnum);
+                }
                 updateBox.updateAll("box_id = ? and work_id = ?",box_id,work_id);
                 break;
             default:
