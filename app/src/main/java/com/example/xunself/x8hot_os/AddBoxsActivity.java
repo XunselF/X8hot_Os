@@ -18,10 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.litepal.LitePal;
+import org.litepal.crud.DataSupport;
 import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class AddBoxsActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -237,6 +239,8 @@ public class AddBoxsActivity extends AppCompatActivity implements View.OnClickLi
             inputBoxNumber.setVisibility(View.VISIBLE);
             commitButton.setVisibility(View.VISIBLE);
             clearButton.setVisibility(View.VISIBLE);
+
+
         }
     }
 
@@ -270,9 +274,13 @@ public class AddBoxsActivity extends AppCompatActivity implements View.OnClickLi
         commitText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Box box = new Box(mWorkId,mBoxId,mBoxNumber,mBoxHNumber,mDataHNumber,mBoxPrize,mBoxCreateTime,mBoxContent,NOT_CARRY_OUT);
-                box.save();
-                Toast.makeText(AddBoxsActivity.this,"提交成功！",Toast.LENGTH_SHORT).show();
+                if (getequalData()){
+                    Box box = new Box(mWorkId,mBoxId,mBoxNumber,mBoxHNumber,mDataHNumber,mBoxPrize,mBoxCreateTime,mBoxContent,NOT_CARRY_OUT);
+                    box.save();
+                    Toast.makeText(AddBoxsActivity.this,"提交成功！",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(AddBoxsActivity.this,"提交失败！纸箱内已经存在相同的数据",Toast.LENGTH_LONG).show();
+                }
                 dialogContent.dismiss();
                 finish();
 
@@ -284,5 +292,12 @@ public class AddBoxsActivity extends AppCompatActivity implements View.OnClickLi
                 dialogContent.dismiss();
             }
         });
+    }
+    private boolean getequalData(){
+        List<Box> boxList = DataSupport.where("work_id = ? and box_id = ?",mWorkId,mBoxId).find(Box.class);
+        if (boxList.size() == 0)
+            return true;
+        else
+            return false;
     }
 }

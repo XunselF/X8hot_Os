@@ -64,19 +64,20 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp">
             <TextView
-                android:id="@+id/work_order_return"
-                android:text="否"
+                android:id="@+id/work_order_commit"
+                android:text="是"
                 android:textColor="@color/colorAccent"
                 android:layout_marginRight="60dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
-                android:id="@+id/work_order_commit"
-                android:text="是"
+                android:id="@+id/work_order_return"
+                android:text="否"
                 android:textColor="@color/colorAccent"
                 android:layout_marginRight="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
         </LinearLayout>
     </LinearLayout>
 

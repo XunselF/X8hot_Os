@@ -97,6 +97,8 @@ public class WorkorderFragment extends Fragment {
      */
     private void getBoxList(){
         boxList = new ArrayList<>();
+        boxWorkIdList = new ArrayList<>();
+        oldBoxWorkIdList = new ArrayList<>();
         boxList = DataSupport.findAll(Box.class);
 
         if (boxList.size() == 0){
@@ -110,8 +112,6 @@ public class WorkorderFragment extends Fragment {
      * 获取工单
      */
     private void getBoxWorkId(){
-        boxWorkIdList = new ArrayList<>();
-        oldBoxWorkIdList = new ArrayList<>();
         boxWorkIdList.add(boxList.get(0).getWork_id());
         for (int i = 0; i < boxList.size(); i++){
             for (int j = 0; j < boxWorkIdList.size(); j++){
@@ -138,12 +138,12 @@ public class WorkorderFragment extends Fragment {
      * @param boxItemList   传入单个工单的所有纸箱数据
      * @return      返回总价
      */
-    private String getWorkTotalPrize(List<Box> boxItemList){
+    private double getWorkTotalPrize(List<Box> boxItemList){
         double totalPrize = 0;
         for (int i = 0; i < boxItemList.size(); i++){
-            totalPrize += boxItemList.get(i).getBox_num() * boxItemList.get(i).getBox_prize();          //叠加单个纸箱的价格
+            totalPrize += (double) boxItemList.get(i).getBox_num() * (double)boxItemList.get(i).getBox_prize();          //叠加单个纸箱的价格
         }
-        return String.valueOf(totalPrize);
+        return totalPrize;
     }
 
     /**
@@ -190,7 +190,7 @@ public class WorkorderFragment extends Fragment {
 
 
             holder.work_id.setText(box_Item_WorkId);                                               //显示工单名
-            holder.work_money.setText(getWorkTotalPrize(boxItemList));                             //显示工单总价
+            holder.work_money.setText(String.format("%.2f",getWorkTotalPrize(boxItemList)));                             //显示工单总价
 
         }
 
@@ -243,7 +243,7 @@ public class WorkorderFragment extends Fragment {
                 default:
                     break;
             }
-            holder.box_TotalPrize.setText(box.getBox_num() * box.getBox_prize() + "");            //显示纸箱价格
+            holder.box_TotalPrize.setText(String.format("%.2f",box.getBox_num() * box.getBox_prize() ));            //显示纸箱价格
             holder.work_box_item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

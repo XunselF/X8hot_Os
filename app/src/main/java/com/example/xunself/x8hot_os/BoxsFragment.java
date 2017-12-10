@@ -48,6 +48,8 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
     private View view;
 
     private Toolbar main_toolbar;
+    private TextView main_footer_text;
+    private EditText textview;                                                          //搜索框内容
 
     private List<Box> boxsList;                                     //数据
     private List<Box> beforeBoxsList;                               //历史纪录
@@ -66,6 +68,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
     private FloatingActionsMenu floatingActionsMenu;
     private FloatingActionButton addBoxButton;
     private FloatingActionButton recordBoxButton;
+    private FloatingActionButton appaboutButton;
 
     private final int NOT_CARRY_OUT = 0;                                        //工单未完成
     private final int CARRY_OUT = 1;                                            //工单已完成
@@ -73,7 +76,6 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_boxs,container,false);
-        setHasOptionsMenu(true);
         init();
         return view;
     }
@@ -81,9 +83,20 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onResume() {
         super.onResume();
+        setHasOptionsMenu(true);
         getBoxList();               //获取数据
+        getFooterData();
+        if (textview != null){
+            setSearchView(textview.getText().toString());
+        }
     }
-
+    private void getFooterData(){
+        if (beforeBoxsList.size() == 0){
+            main_footer_text.setText("现在没有纸箱工单数据~ \n 快点击右下角进行添加纸箱操作吧~");
+        }else{
+            main_footer_text.setText("总共有" + beforeBoxsList.size() + "个纸箱");
+        }
+    }
 
 
     @Override
@@ -93,7 +106,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
         MenuItem menuItem = menu.findItem(R.id.action_search);//在菜单中找到对应控件的item
         searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         ImageView searchButton = (ImageView) searchView.findViewById(R.id.search_button);
-        EditText textview = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        textview = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
         textview.setTextColor(getResources().getColor(R.color.text));
         searchView.setQueryHint("请输入纸箱型号：");
         searchButton.setImageResource(R.drawable.ic_search_white_24dp);
@@ -105,16 +118,11 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
 
             @Override
             public boolean onQueryTextChange(String newText) {                          //通过搜索进行检测符合的数据
-                boxsList.clear();                                                       //清空数据
-                for (int i = 0; i < boxsId.size(); i++){
-                    if (boxsId.get(i).toUpperCase().indexOf(newText.toUpperCase()) != -1){        //忽略大小写，当包含该字符串 加入数据
-                        boxsList.add(beforeBoxsList.get(i));
-                    }
-                }
-                boxsAdapter.notifyDataSetChanged() ;                                    //更新数据
+                setSearchView(newText);
                 return true;
             }
         });
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -139,10 +147,12 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
          * 初始化控件
          */
         main_toolbar = (Toolbar) getActivity().findViewById(R.id.main_toolbar);
+        main_footer_text = (TextView) view.findViewById(R.id.main_footer);
         fragmentBoxLayout = (LinearLayout) view.findViewById(R.id.Fragment_BoxLayout);
         floatingActionsMenu = (FloatingActionsMenu) view.findViewById(R.id.fab_menu);
         addBoxButton = (FloatingActionButton) view.findViewById(R.id.fab_add);
         recordBoxButton = (FloatingActionButton) view.findViewById(R.id.fab_record);
+        appaboutButton = (FloatingActionButton) view.findViewById(R.id.fab_appabout);
 
         boxRecyclerView = (RecyclerView) view.findViewById(R.id.boxs_recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -156,6 +166,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
         fragmentBoxLayout.setOnClickListener(this);
         addBoxButton.setOnClickListener(this);
         recordBoxButton.setOnClickListener(this);
+        appaboutButton.setOnClickListener(this);
 
         /**
          * 搜索框搜索功能
@@ -174,6 +185,20 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
 //        });
 
     }
+    private void setSearchView(String name){
+        boxsList.clear();                                                       //清空数据
+        for (int i = 0; i < boxsId.size(); i++){
+            if (boxsId.get(i).toUpperCase().indexOf(name.toUpperCase()) != -1){        //忽略大小写，当包含该字符串 加入数据
+                boxsList.add(beforeBoxsList.get(i));
+            }
+        }
+        if (boxsList.size() != beforeBoxsList.size()){
+            main_footer_text.setVisibility(View.GONE);
+        }else{
+            main_footer_text.setVisibility(View.VISIBLE);
+        }
+        boxsAdapter.notifyDataSetChanged() ;                                    //更新数据
+    }
 
     /**
      * 获取数据源
@@ -188,6 +213,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
             Box box = boxsList.get(i);
             boxsId.add(box.getBox_id());
         }
+
         boxsAdapter.notifyDataSetChanged();
     }
 
@@ -217,6 +243,11 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.fab_record:
                 intent = new Intent(getContext(),RecordActivity.class);
+                startActivity(intent);
+                hideInputMethod();
+                break;
+            case R.id.fab_appabout:
+                intent = new Intent(getContext(),AboutAppActivity.class);
                 startActivity(intent);
                 hideInputMethod();
                 break;
@@ -257,7 +288,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            final Box box = boxsList.get(position);
+            final Box box = boxsList.get(boxsList.size() - 1 - position);
             holder.boxItemLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -304,9 +335,11 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
                                 break;
                             case R.id.about_item:
                                 BoxAboutActivity.actionStart(getContext(),box);
+                                hideInputMethod();
                                 break;
                             case R.id.delete_item:
                                 DeleteActivity.actionStart(getContext(),box);
+                                hideInputMethod();
                                 break;
                             default:
                                 break;

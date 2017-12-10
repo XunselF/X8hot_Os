@@ -10,18 +10,18 @@
         android:layout_gravity="bottom">
             <TextView
                 android:text="X8HOT_OS"
-                android:textSize="30dp"
-                android:textColor="#cf38fd"
+                android:textSize="40dp"
+                android:textColor="@color/colorPrimaryDark"
                 android:gravity="right"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"/>
             <TextView
-                android:text="Do the Best*"
-                android:textColor="#cf38fd"
+                android:text="纸箱管理系统"
+                android:textColor="@color/colorPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"/>
+                android:gravity="right" />
 
     </LinearLayout>
 
