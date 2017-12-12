@@ -20,10 +20,14 @@
                 android:id="@+id/work_id"
                 android:text="7544"
                 android:textColor="@color/colorPrimary"
-                android:textSize="18dp"
+                android:textSize="22dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="#cfcfcf"/>
         <TextView
             android:text="工单明细："
             android:layout_width="wrap_content"
@@ -38,32 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
         </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.1dp"
-            android:background="#cfcfcf"/>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_margin="10dp">
-            <TextView
-                android:text="总价："
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/work_money"
-                android:text="7544"
-                android:textColor="@color/colorselectedFragment"
-                android:textSize="18dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:text="元"
-                android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+
     </LinearLayout>
 
 

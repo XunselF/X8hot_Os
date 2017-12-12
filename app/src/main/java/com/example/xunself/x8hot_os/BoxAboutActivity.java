@@ -31,8 +31,6 @@ public class BoxAboutActivity extends AppCompatActivity {
     private TextView work_idText;                           //订单号
     private TextView box_numText;                           //纸箱总数
     private TextView box_hnumText;                          //已完成纸箱
-    private TextView box_prizeText;                         //纸箱单价
-    private TextView box_sumprizeText;                      //纸箱总价
     private TextView box_nhnumText;                         //还剩纸箱
     private ImageView dataWarningImage;                     //数据红字图片
     private TextView data_hnumText;                         //剩余材料
@@ -100,8 +98,6 @@ public class BoxAboutActivity extends AppCompatActivity {
         work_idText = (TextView) findViewById(R.id.work_id);
         box_numText = (TextView) findViewById(R.id.boxs_num);
         box_hnumText = (TextView) findViewById(R.id.boxs_hnum);
-        box_prizeText = (TextView) findViewById(R.id.boxs_prize);
-        box_sumprizeText = (TextView) findViewById(R.id.boxs_sumprize);
         box_nhnumText = (TextView) findViewById(R.id.boxs_nhnum);
         dataWarningImage = (ImageView) findViewById(R.id.data_warning_image);
         data_hnumText = (TextView) findViewById(R.id.data_hnum);
@@ -149,8 +145,6 @@ public class BoxAboutActivity extends AppCompatActivity {
         box_numText.setText(seletedBox.getBox_num() + "");
         box_hnumText.setText(seletedBox.getBox_hnum() + "");
         box_nhnumText.setText(boxNHnum + "");
-        box_prizeText.setText(seletedBox.getBox_prize() + "");
-        box_sumprizeText.setText(sumprize);
         data_hnumText.setText(seletedBox.getData_hnum() + "");
         box_contentText.setText(seletedBox.getContent());
         box_createtime.setText(seletedBox.getCreate_time());

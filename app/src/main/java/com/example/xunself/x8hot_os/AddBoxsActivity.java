@@ -35,7 +35,6 @@ public class AddBoxsActivity extends AppCompatActivity implements View.OnClickLi
     private EditText inputWorkId;
     private EditText inputBoxNumber;
     private EditText inputBoxContent;
-    private EditText inputBoxPrize;
     private EditText inputBoxHNumber;
     private EditText inputDataHNumber;
 
@@ -73,9 +72,7 @@ public class AddBoxsActivity extends AppCompatActivity implements View.OnClickLi
         addBoxLayout = (LinearLayout) findViewById(R.id.add_boxs_layout);
         inputBoxId = (EditText) findViewById(R.id.input_boxId);
         inputWorkId = (EditText) findViewById(R.id.input_workId);
-        inputBoxNumber = (EditText) findViewById(R.id.input_boxNumber);
         inputBoxContent = (EditText) findViewById(R.id.input_boxContent);
-        inputBoxPrize = (EditText) findViewById(R.id.input_boxPrize);
         inputBoxHNumber = (EditText) findViewById(R.id.input_boxHNumber);
         inputDataHNumber = (EditText) findViewById(R.id.input_dataHNumber);
         commitButton = (Button) findViewById(R.id.commit_button);
@@ -146,15 +143,12 @@ public class AddBoxsActivity extends AppCompatActivity implements View.OnClickLi
                     String workId = inputWorkId.getText().toString();
                     String boxNumber = inputBoxNumber.getText().toString();
                     String boxContent = inputBoxContent.getText().toString();
-                    String boxPrize = inputBoxPrize.getText().toString();
                     if (boxId.trim().equals("") || boxId == null){
                         Toast.makeText(AddBoxsActivity.this,"请输入纸箱型号！",Toast.LENGTH_SHORT).show();
                     }else if (workId.trim().equals("") || workId == null){
                         Toast.makeText(AddBoxsActivity.this,"请输入订单号！",Toast.LENGTH_SHORT).show();
                     }else if (boxNumber.trim().equals("") || boxNumber.trim().equals("0")){
                         Toast.makeText(AddBoxsActivity.this,"纸箱数量不可为0！",Toast.LENGTH_SHORT).show();
-                    }else if (boxPrize.trim().equals("") || boxPrize == null){
-                        Toast.makeText(AddBoxsActivity.this,"请输入单价！",Toast.LENGTH_SHORT).show();
                     }else if (boxId.length() > 30){
                         Toast.makeText(AddBoxsActivity.this,"纸箱型号过长！不得超过30个字符",Toast.LENGTH_SHORT).show();
                     }else if (workId.length() > 40) {
@@ -163,7 +157,6 @@ public class AddBoxsActivity extends AppCompatActivity implements View.OnClickLi
                         mBoxId = boxId;
                         mWorkId = workId;
                         mBoxNumber = Integer.parseInt(boxNumber);
-                        mBoxPrize = Double.parseDouble(boxPrize);
                         mBoxContent = boxContent;
                         AlertDialog.Builder dialog = new AlertDialog.Builder(AddBoxsActivity.this);
                         dialog.setTitle("询问");
@@ -194,7 +187,6 @@ public class AddBoxsActivity extends AppCompatActivity implements View.OnClickLi
                 inputBoxId.setText("");
                 inputWorkId.setText("");
                 inputBoxContent.setText("");
-                inputBoxPrize.setText("");
                 inputBoxNumber.setText("");
                 break;
             default:
@@ -222,7 +214,6 @@ public class AddBoxsActivity extends AppCompatActivity implements View.OnClickLi
             inputBoxId.setVisibility(View.GONE);
             inputWorkId.setVisibility(View.GONE);
             inputBoxContent.setVisibility(View.GONE);
-            inputBoxPrize.setVisibility(View.GONE);
             inputBoxNumber.setVisibility(View.GONE);
             commitButton.setVisibility(View.GONE);
             clearButton.setVisibility(View.GONE);
@@ -235,7 +226,6 @@ public class AddBoxsActivity extends AppCompatActivity implements View.OnClickLi
             inputBoxId.setVisibility(View.VISIBLE);
             inputWorkId.setVisibility(View.VISIBLE);
             inputBoxContent.setVisibility(View.VISIBLE);
-            inputBoxPrize.setVisibility(View.VISIBLE);
             inputBoxNumber.setVisibility(View.VISIBLE);
             commitButton.setVisibility(View.VISIBLE);
             clearButton.setVisibility(View.VISIBLE);

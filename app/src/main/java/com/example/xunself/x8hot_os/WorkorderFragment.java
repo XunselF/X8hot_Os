@@ -163,12 +163,10 @@ public class WorkorderFragment extends Fragment {
 
         class ViewHolder extends RecyclerView.ViewHolder{
             TextView work_id;               //工单号
-            TextView work_money;            //总金额
             RecyclerView work_recyclerview;     //用于显示工单每个纸箱
             public ViewHolder(View itemView) {
                 super(itemView);
                 work_id = (TextView) itemView.findViewById(R.id.work_id);
-                work_money = (TextView) itemView.findViewById(R.id.work_money);
                 work_recyclerview = (RecyclerView) itemView.findViewById(R.id.work_box_recyclerview);
             }
         }
@@ -190,7 +188,6 @@ public class WorkorderFragment extends Fragment {
 
 
             holder.work_id.setText(box_Item_WorkId);                                               //显示工单名
-            holder.work_money.setText(String.format("%.2f",getWorkTotalPrize(boxItemList)));                             //显示工单总价
 
         }
 
@@ -210,13 +207,13 @@ public class WorkorderFragment extends Fragment {
             LinearLayout work_box_item;
             TextView box_id;
             TextView box_carryStatus;
-            TextView box_TotalPrize;
+            TextView data_nhnum;
             public ViewHolder(View itemView) {
                 super(itemView);
                 work_box_item = (LinearLayout) itemView.findViewById(R.id.work_box_item);
                 box_id = (TextView) itemView.findViewById(R.id.boxs_id);
                 box_carryStatus = (TextView) itemView.findViewById(R.id.boxs_carryStatus);
-                box_TotalPrize = (TextView) itemView.findViewById(R.id.boxs_Totalprize);
+                data_nhnum = (TextView) itemView.findViewById(R.id.data_nhnum);
             }
         }
 
@@ -230,7 +227,23 @@ public class WorkorderFragment extends Fragment {
         @Override
         public void onBindViewHolder(BoxItemAdapter.ViewHolder holder, int position) {
             final Box box = mBoxsItemList.get(position);
-            holder.box_id.setText(box.getBox_id());                                                //显示纸箱型号
+            int box_nhnum = box.getBox_num() - box.getBox_hnum();
+            //统计剩余数据
+
+            int data_nhnum = box_nhnum - box.getData_hnum();
+            //统计还需订材料数量
+
+            holder.box_id.setText(box.getBox_id());
+            //显示纸箱型号
+
+            if (data_nhnum > 0){                                                                    //显示还需材料状况
+                holder.data_nhnum.setText("(还需订" + data_nhnum + "个材料！)");
+                holder.data_nhnum.setTextColor(getResources().getColor(R.color.boxnocarryout));
+            }else{
+                holder.data_nhnum.setText("(已经不需要材料)");
+                holder.data_nhnum.setTextColor(getResources().getColor(R.color.boxcarryout));
+            }
+
             switch (box.getIsCarryOut()){                                                          //显示完成状态
                 case CARRY_OUT:
                     holder.box_carryStatus.setText("(已完成)");
@@ -243,10 +256,11 @@ public class WorkorderFragment extends Fragment {
                 default:
                     break;
             }
-            holder.box_TotalPrize.setText(String.format("%.2f",box.getBox_num() * box.getBox_prize() ));            //显示纸箱价格
+
+
             holder.work_box_item.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
+                public void onClick(View view) {                                  //点击事件：跳转纸箱详细
                     BoxAboutActivity.actionStart(getActivity(),box);
                 }
             });
