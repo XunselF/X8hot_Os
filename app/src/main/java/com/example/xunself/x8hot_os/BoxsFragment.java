@@ -278,7 +278,10 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
     }
 
 
-
+    /**
+     * 搜索
+     * @param name
+     */
     private void setSearchView(String name){
         boxsList.clear();                                                       //清空数据
         for (int i = 0; i < boxsId.size(); i++){

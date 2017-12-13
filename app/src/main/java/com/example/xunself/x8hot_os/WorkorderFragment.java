@@ -29,6 +29,8 @@ import java.util.List;
 
 public class WorkorderFragment extends Fragment {
 
+    private final String[] LETTER = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","S","Y","Z","0","1"
+            ,"2","3","4","5","6","7","8","9"};
     private View view;
 
     private RecyclerView workOrderRecyclerView;
@@ -75,20 +77,31 @@ public class WorkorderFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {                          //通过搜索进行检测符合的数据
-                boxWorkIdList.clear();
-                if (newText.length() != 0){
-                    footLayout.setVisibility(View.GONE);
-                }
-                for (int i = 0; i < oldBoxWorkIdList.size(); i++){
-                    if (oldBoxWorkIdList.get(i).toUpperCase().indexOf(newText.toUpperCase()) != -1){
-                        boxWorkIdList.add(oldBoxWorkIdList.get(i));
-                    }
-                }
-                workOrderAdapter.notifyDataSetChanged();
+                setSearchView(newText);
                 return true;
             }
         });
         super.onCreateOptionsMenu(menu, inflater);
+    }
+    /**
+     * 搜索
+     * @param name
+     */
+    private void setSearchView(String name){
+        boxWorkIdList.clear();                                                       //清空数据
+        for (int i = 0; i < oldBoxWorkIdList.size(); i++){
+            if (oldBoxWorkIdList.get(i).toUpperCase().indexOf(name.toUpperCase()) != -1){        //忽略大小写，当包含该字符串 加入数据
+                boxWorkIdList.add(oldBoxWorkIdList.get(i));
+            }
+        }
+        if (name.equals("") && oldBoxWorkIdList.size() == 0){
+            footLayout.setVisibility(View.VISIBLE);
+        }else if (name.equals("") && oldBoxWorkIdList.size() == boxWorkIdList.size()){
+            footLayout.setVisibility(View.VISIBLE);
+        }else {
+            footLayout.setVisibility(View.GONE);
+        }
+        workOrderAdapter.notifyDataSetChanged() ;                                    //更新数据
     }
 
 
@@ -99,7 +112,10 @@ public class WorkorderFragment extends Fragment {
         boxList = new ArrayList<>();
         boxWorkIdList = new ArrayList<>();
         oldBoxWorkIdList = new ArrayList<>();
+
         boxList = DataSupport.findAll(Box.class);
+
+
 
         if (boxList.size() == 0){
             footerText.setText("当前没有工单数据~");
@@ -123,6 +139,7 @@ public class WorkorderFragment extends Fragment {
                 }
             }
         }
+        SortWorkIdList();
         oldBoxWorkIdList.addAll(boxWorkIdList);
     }
     /**
@@ -270,5 +287,86 @@ public class WorkorderFragment extends Fragment {
         public int getItemCount() {
             return mBoxsItemList.size();
         }
+    }
+
+    /**
+     * 对数据进行排序
+     */
+    private void SortWorkIdList(){
+        List<String> workIdList = new ArrayList<>();
+        workIdList.addAll(boxWorkIdList);
+        String[] worksId = new String[boxWorkIdList.size()];
+        int[] worksItem = new int[boxWorkIdList.size()];
+        String tempworkId = "";
+        int tempworkItem = 0;
+
+        for (int i = 0; i < boxWorkIdList.size(); i++){
+            worksId[i] = boxWorkIdList.get(i);
+            worksItem[i] = i;
+        }
+        //获取数据的数据id跟纸箱id
+
+        for (int i = 0; i < boxWorkIdList.size(); i++){
+
+            for (int j = i; j < boxWorkIdList.size(); j++){
+
+
+
+                if (CompareInitial(worksId[i],worksId[j]) > 0){
+                    tempworkItem = worksItem[j];
+                    worksItem[j] = worksItem[i];
+                    worksItem[i] = tempworkItem;
+                    //进行item值的替换
+
+                    tempworkId = worksId[j];
+                    worksId[j] = worksId[i];
+                    worksId[i] = tempworkId;
+                    //进行boxid值的替换
+                }else if (CompareInitial(worksId[i],worksId[j]) == 0){
+
+
+                    if (worksId[i].compareTo(worksId[j]) > 0){
+                        tempworkItem = worksItem[j];
+                        worksItem[j] = worksItem[i];
+                        worksItem[i] = tempworkItem;
+                        //进行item值的替换
+
+                        tempworkId = worksId[j];
+                        worksId[j] = worksId[i];
+                        worksId[i] = tempworkId;
+                        //进行boxid值的替换
+
+                    }
+                }
+
+            }
+        }
+        boxWorkIdList.clear();
+
+        for (int i = 0; i < worksId.length; i++){
+            this.boxWorkIdList.add(workIdList.get(worksItem[i]));
+        }
+
+
+    }
+
+    /**
+     *查询两个字符的首字符
+     */
+    private int CompareInitial(String boxid1,String boxid2){
+        int boxidInitial1 = 0;
+        int boxidInitial2 = 0;
+        for (int i = 0; i < LETTER.length; i++ ){
+            if (boxid1.substring(0,1).toUpperCase().equals(LETTER[i]))
+                boxidInitial1 = i;
+            if (boxid2.substring(0,1).toUpperCase().equals(LETTER[i]))
+                boxidInitial2 = i;
+        }
+        if (boxidInitial1 > boxidInitial2)
+            return 1;
+        else if (boxidInitial1 == boxidInitial2)
+            return 0;
+        else
+            return -1;
     }
 }
