@@ -47,9 +47,15 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
 
     private View view;
 
-    private Toolbar main_toolbar;
+    private Toolbar  main_toolbar;
+    private LinearLayout main_footer;
+    //尾部板块
+
     private TextView main_footer_text;
-    private EditText textview;                                                          //搜索框内容
+    //尾部板块文字
+
+    private EditText textview;
+    //搜索框内容
 
     private List<Box> boxsList;                                     //数据
     private List<Box> beforeBoxsList;                               //历史纪录
@@ -147,7 +153,8 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
          * 初始化控件
          */
         main_toolbar = (Toolbar) getActivity().findViewById(R.id.main_toolbar);
-        main_footer_text = (TextView) view.findViewById(R.id.main_footer);
+        main_footer = (LinearLayout) view.findViewById(R.id.main_footer);
+        main_footer_text = (TextView) view.findViewById(R.id.main_footer_text);
         fragmentBoxLayout = (LinearLayout) view.findViewById(R.id.Fragment_BoxLayout);
         floatingActionsMenu = (FloatingActionsMenu) view.findViewById(R.id.fab_menu);
         addBoxButton = (FloatingActionButton) view.findViewById(R.id.fab_add);
@@ -185,6 +192,54 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
 //        });
 
     }
+
+    /**
+     * 对数据进行排序
+     */
+    private void SortBoxsList(){
+        List<Box> boxList = DataSupport.findAll(Box.class);
+        String[] boxsId = new String[boxList.size()];
+        int[] boxsItem = new int[boxList.size()];
+        String tempBoxId = "";
+        int tempBoxItem = 0;
+        boxList = DataSupport.findAll(Box.class);
+
+        for (int i = 0; i < boxList.size(); i++){
+            boxsId[i] = boxList.get(i).getBox_id();
+            boxsItem[i] = i;
+        }
+        //获取数据的数据id跟纸箱id
+
+        for (int i = 0; i < boxList.size(); i++){
+
+            for (int j = 0; j < boxList.size(); j++){
+
+
+                if (boxsId[i].compareTo(boxsId[j]) < 0){
+
+                    tempBoxItem = boxsItem[j];
+                    boxsItem[j] = boxsItem[i];
+                    boxsItem[i] = tempBoxItem;
+                    //进行item值的替换
+
+                    tempBoxId = boxsId[j];
+                    boxsId[j] = boxsId[i];
+                    boxsId[i] = tempBoxId;
+                    //进行boxid值的替换
+
+                }
+
+                //31 22 54 12 11
+            }// 22 31 54 12 11
+        }
+
+        for (int i = 0; i < boxList.size(); i++){
+            this.boxsList.add(boxList.get(boxsItem[i]));
+        }
+
+
+    }
+
     private void setSearchView(String name){
         boxsList.clear();                                                       //清空数据
         for (int i = 0; i < boxsId.size(); i++){
@@ -192,10 +247,12 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
                 boxsList.add(beforeBoxsList.get(i));
             }
         }
-        if (boxsList.size() != beforeBoxsList.size()){
-            main_footer_text.setVisibility(View.GONE);
-        }else{
-            main_footer_text.setVisibility(View.VISIBLE);
+        if (name.equals("") && beforeBoxsList.size() == 0){
+            main_footer.setVisibility(View.VISIBLE);
+        }else if (name.equals("") && beforeBoxsList.size() == boxsList.size()){
+            main_footer.setVisibility(View.VISIBLE);
+        }else {
+            main_footer.setVisibility(View.GONE);
         }
         boxsAdapter.notifyDataSetChanged() ;                                    //更新数据
     }
@@ -207,7 +264,8 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
         beforeBoxsList = new ArrayList<>();
         boxsList = new ArrayList<>();
         boxsId = new ArrayList<>();
-        boxsList = DataSupport.findAll(Box.class);
+
+        SortBoxsList();
         beforeBoxsList.addAll(boxsList);
         for (int i = 0; i < boxsList.size(); i ++){
             Box box = boxsList.get(i);
@@ -288,7 +346,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            final Box box = boxsList.get(boxsList.size() - 1 - position);
+            final Box box = boxsList.get(position);
             holder.boxItemLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

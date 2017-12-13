@@ -68,13 +68,13 @@
 
 
                 <EditText
-                    android:id="@+id/input_boxPrize"
+                    android:id="@+id/input_boxNumber"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:background="#eaeaea"
-                    android:hint="纸箱单价（元）："
-                    android:digits="1234567890."
+                    android:hint="纸箱数量："
+                    android:digits="1234567890"
                     android:inputType="number"
                     android:maxLength="10"
                     android:maxLines="1"

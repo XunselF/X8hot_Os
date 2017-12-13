@@ -9,7 +9,8 @@
     android:focusableInTouchMode="true">
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#fff">
 
         <LinearLayout
             android:id="@+id/Fragment_BoxLayout"
@@ -35,17 +36,20 @@
                                 ></android.support.v7.widget.RecyclerView>
                         </RelativeLayout>
                     <LinearLayout
+                        android:id="@+id/main_footer"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:layout_marginTop="0.1dp"
-                        android:background="#fff">
+                        android:background="#fff"
+                        android:layout_marginBottom="0.1dp">
                         <TextView
-                            android:id="@+id/main_footer"
+                            android:id="@+id/main_footer_text"
                             android:text="现在没有纸箱工单数据~ \n 快点击右下角进行添加纸箱操作吧~"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:layout_gravity="center"/>
+                            android:layout_gravity="center"
+                            />
                     </LinearLayout>
                     </LinearLayout>
 

@@ -42,7 +42,6 @@ public class AddBoxsActivity extends AppCompatActivity implements View.OnClickLi
     private String mWorkId;
     private int mBoxNumber;
     private int mBoxHNumber = 0;
-    private double mBoxPrize;
     private int mDataHNumber = 0;
     private String mBoxCreateTime;
     private String mBoxContent;
@@ -72,6 +71,7 @@ public class AddBoxsActivity extends AppCompatActivity implements View.OnClickLi
         addBoxLayout = (LinearLayout) findViewById(R.id.add_boxs_layout);
         inputBoxId = (EditText) findViewById(R.id.input_boxId);
         inputWorkId = (EditText) findViewById(R.id.input_workId);
+        inputBoxNumber = (EditText) findViewById(R.id.input_boxNumber);
         inputBoxContent = (EditText) findViewById(R.id.input_boxContent);
         inputBoxHNumber = (EditText) findViewById(R.id.input_boxHNumber);
         inputDataHNumber = (EditText) findViewById(R.id.input_dataHNumber);
@@ -255,7 +255,6 @@ public class AddBoxsActivity extends AppCompatActivity implements View.OnClickLi
         "总数：" + mBoxNumber +  "\n" +
                 "已做数量：" + mBoxHNumber + "\n" +
         "已有材料：" + mDataHNumber + "\n" +
-        "单价：" + mBoxPrize + "\n" +
         "备注：" + mBoxContent + "\n" +
         "提交时间：" + mBoxCreateTime);
         dialogContent.setCancelable(false);
@@ -265,7 +264,7 @@ public class AddBoxsActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onClick(View view) {
                 if (getequalData()){
-                    Box box = new Box(mWorkId,mBoxId,mBoxNumber,mBoxHNumber,mDataHNumber,mBoxPrize,mBoxCreateTime,mBoxContent,NOT_CARRY_OUT);
+                    Box box = new Box(mWorkId,mBoxId,mBoxNumber,mBoxHNumber,mDataHNumber,0,mBoxCreateTime,mBoxContent,NOT_CARRY_OUT);
                     box.save();
                     Toast.makeText(AddBoxsActivity.this,"提交成功！",Toast.LENGTH_SHORT).show();
                 }else{
