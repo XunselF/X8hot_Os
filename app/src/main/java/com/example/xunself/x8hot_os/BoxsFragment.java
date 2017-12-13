@@ -45,6 +45,8 @@ import java.util.List;
 
 public class BoxsFragment extends Fragment implements View.OnClickListener{
 
+    private final String[] LETTER = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","S","Y","Z","0","1"
+    ,"2","3","4","5","6","7","8","9"};
     private View view;
 
     private Toolbar  main_toolbar;
@@ -212,22 +214,37 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
 
         for (int i = 0; i < boxList.size(); i++){
 
-            for (int j = 0; j < boxList.size(); j++){
+            for (int j = i; j < boxList.size(); j++){
 
 
-                if (boxsId[i].compareTo(boxsId[j]) < 0){
 
-                    tempBoxItem = boxsItem[j];
-                    boxsItem[j] = boxsItem[i];
-                    boxsItem[i] = tempBoxItem;
-                    //进行item值的替换
+                    if (CompareInitial(boxsId[i],boxsId[j]) > 0){
+                        tempBoxItem = boxsItem[j];
+                        boxsItem[j] = boxsItem[i];
+                        boxsItem[i] = tempBoxItem;
+                        //进行item值的替换
 
-                    tempBoxId = boxsId[j];
-                    boxsId[j] = boxsId[i];
-                    boxsId[i] = tempBoxId;
-                    //进行boxid值的替换
+                        tempBoxId = boxsId[j];
+                        boxsId[j] = boxsId[i];
+                        boxsId[i] = tempBoxId;
+                        //进行boxid值的替换
+                    }else if (CompareInitial(boxsId[i],boxsId[j]) == 0){
 
-                }
+
+                        if (boxsId[i].compareTo(boxsId[j]) > 0){
+                            tempBoxItem = boxsItem[j];
+                            boxsItem[j] = boxsItem[i];
+                            boxsItem[i] = tempBoxItem;
+                            //进行item值的替换
+
+                            tempBoxId = boxsId[j];
+                            boxsId[j] = boxsId[i];
+                            boxsId[i] = tempBoxId;
+                            //进行boxid值的替换
+
+
+                        }
+                    }
 
                 //31 22 54 12 11
             }// 22 31 54 12 11
@@ -239,6 +256,28 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
 
 
     }
+
+    /**
+     *查询两个字符的首字符
+     */
+    private int CompareInitial(String boxid1,String boxid2){
+        int boxidInitial1 = 0;
+        int boxidInitial2 = 0;
+        for (int i = 0; i < LETTER.length; i++ ){
+            if (boxid1.substring(0,1).toUpperCase().equals(LETTER[i]))
+                boxidInitial1 = i;
+            if (boxid2.substring(0,1).toUpperCase().equals(LETTER[i]))
+                boxidInitial2 = i;
+        }
+        if (boxidInitial1 > boxidInitial2)
+            return 1;
+        else if (boxidInitial1 == boxidInitial2)
+            return 0;
+        else
+            return -1;
+    }
+
+
 
     private void setSearchView(String name){
         boxsList.clear();                                                       //清空数据
@@ -319,6 +358,9 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
             LinearLayout boxItemLayout;
             TextView box_carryStatus;                       //纸箱完成状态
             TextView boxId;
+            TextView workId;
+            TextView boxIdInitial;                          //纸箱id首字母
+            LinearLayout boxIdInitialLayout;
             TextView boxNHnum;
             TextView dataHnum;
             TextView dataNHnum;
@@ -328,6 +370,9 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
                 super(itemView);
                 boxItemLayout = (LinearLayout) itemView.findViewById(R.id.box_item_layout);
                 boxId = (TextView)itemView.findViewById(R.id.boxs_id);
+                boxIdInitial = (TextView) itemView.findViewById(R.id.boxid_Initial);
+                workId = (TextView) itemView.findViewById(R.id.works_id);
+                boxIdInitialLayout = (LinearLayout) itemView.findViewById(R.id.boxid_Initial_layout);
                 boxNHnum = (TextView) itemView.findViewById(R.id.boxs_nhnum);
                 dataHnum = (TextView) itemView.findViewById(R.id.data_hnum);
                 dataNHnum = (TextView) itemView.findViewById(R.id.data_nhnum);
@@ -347,6 +392,8 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             final Box box = boxsList.get(position);
+            String boxId = box.getBox_id();
+            String initialBoxid = boxId.substring(0,1);
             holder.boxItemLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -365,8 +412,11 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
                 boxNHnum = 0;
             int dataNHnum = boxNHnum - box.getData_hnum();                              //材料剩余数量
             holder.boxId.setText(box.getBox_id());
+            holder.workId.setText(box.getWork_id());
             holder.boxNHnum.setText(boxNHnum + "");
             holder.dataHnum.setText(box.getData_hnum() + "");
+
+
             if (dataNHnum > 0){
                 holder.dataNHnum.setTextColor(getResources().getColor(R.color.colorwarning));
                 holder.dataNHnum.setText("(还需要"+ dataNHnum + "个材料)");
@@ -376,6 +426,18 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
                 holder.dataNHnum.setText("(已经不需要材料)");
                 holder.dataWarningImage.setVisibility(View.GONE);
             }
+
+
+            if (position != 0){
+                Box beforeBox = boxsList.get(position - 1);
+                String beforeInitialBoxId = beforeBox.getBox_id().substring(0,1);
+                if (beforeInitialBoxId.toUpperCase().equals(initialBoxid.toUpperCase())){
+                    holder.boxIdInitialLayout.setVisibility(View.GONE);
+                }else{
+                    holder.boxIdInitialLayout.setVisibility(View.VISIBLE);
+                }
+            }
+            holder.boxIdInitial.setText(initialBoxid.toUpperCase());
 
 
             holder.boxMessageMenu.setOnClickListener(new View.OnClickListener() {
