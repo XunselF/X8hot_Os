@@ -24,7 +24,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp" />
             <TextView
-                android:text="慎重！删除之后就无法恢复该工单"
+                android:text="慎重！删除之后就无法恢复该工单！"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000"

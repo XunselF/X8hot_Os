@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#3780ed</color>
+    <color name="colorPrimaryDark">#3173d6</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="colorselectedFragment">#424897</color>
+    <color name="colorselectedFragment">#3173d6</color>
     <color name="colornoselectedFragment">#000</color>
     <color name="colorwarning">#ff5356</color>
 
@@ -11,6 +11,6 @@
     <color name="colorwhile">#ffffff</color>
     <color name="colortext">#838383</color>
 
-    <color name="boxcarryout">#5edc7b</color>
+    <color name="boxcarryout">#34ca57</color>
     <color name="boxnocarryout">#ff5356</color>
 </resources>

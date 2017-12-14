@@ -10,7 +10,7 @@
 <TextView
     android:id="@+id/box_update_time"
     android:text="2017-01-01 12:12"
-    android:textSize="16dp"
+    android:textSize="13dp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" />
 

@@ -21,7 +21,9 @@ import android.widget.Toast;
 
 import org.litepal.crud.DataSupport;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class BoxAboutActivity extends AppCompatActivity {
@@ -146,8 +148,12 @@ public class BoxAboutActivity extends AppCompatActivity {
         box_hnumText.setText(seletedBox.getBox_hnum() + "");
         box_nhnumText.setText(boxNHnum + "");
         data_hnumText.setText(seletedBox.getData_hnum() + "");
-        box_contentText.setText(seletedBox.getContent());
-        box_createtime.setText(seletedBox.getCreate_time());
+        if (seletedBox.getContent().trim().equals("")){
+            box_contentText.setText("(没有备注)");
+        }else{
+            box_contentText.setText(seletedBox.getContent());
+        }
+        box_createtime.setText(getTime(seletedBox.getCreate_time()));
         if (seletedBox.getIsCarryOut() == NOT_CARRY_OUT){
             box_carryStatus.setText("(未完成)");
             box_carryStatus.setTextColor(getResources().getColor(R.color.boxnocarryout));
@@ -157,15 +163,66 @@ public class BoxAboutActivity extends AppCompatActivity {
         }
 
         if (dataNHnum > 0){
-            data_nhnumText.setTextColor(getResources().getColor(R.color.colorwarning));
-            data_nhnumText.setText("(还需要"+ dataNHnum + "个材料)");
+            data_nhnumText.setTextColor(getResources().getColor(R.color.boxnocarryout));
+            data_nhnumText.setText("(还需要"+ dataNHnum + "个材料！)");
             dataWarningImage.setVisibility(View.VISIBLE);
         }else{
-            data_nhnumText.setTextColor(getResources().getColor(R.color.colorPrimary));
+            data_nhnumText.setTextColor(getResources().getColor(R.color.boxcarryout));
             data_nhnumText.setText("(已经不需要材料)");
             dataWarningImage.setVisibility(View.GONE);
         }
     }
+
+
+    /**
+     * 获取时间
+     */
+    private String getTime(String time){
+        SimpleDateFormat sdf1=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat sdf2=new SimpleDateFormat("yyyy年MM月dd号 HH:mm");
+
+        SimpleDateFormat sdf3=new SimpleDateFormat("EEEE");
+        SimpleDateFormat sdf4=new SimpleDateFormat("HH");
+
+        StringBuilder strTime;
+
+        try {
+            Date oldDate = sdf1.parse(time);
+            String oldTime = sdf2.format(oldDate);
+
+            String day = sdf3.format(oldDate);
+            int oldHour = Integer.parseInt(sdf4.format(oldDate));
+
+            strTime = new StringBuilder(oldTime);
+            int index = oldTime.indexOf(" ");
+            if (oldHour < 5){
+                //凌晨
+                strTime.insert(index+1,day + " 凌晨 ");
+            }else if (oldHour >= 6 && oldHour < 12){
+                //早上
+                strTime.insert(index+1,day + " 早上 ");
+            } else if (oldHour >= 12 && oldHour < 14){
+                //中午
+                strTime.insert(index+1,day + " 中午 ");
+            }else if (oldHour >= 14 && oldHour < 18){
+                //下午
+                strTime.insert(index+1,day + " 下午 ");
+            }else{
+                //晚上
+                strTime.insert(index+1,day + " 晚上 ");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            strTime = new StringBuilder();
+        }
+
+
+        return strTime.toString();
+    }
+
+
+
     class BoxWorkOrderAdapter extends RecyclerView.Adapter<BoxWorkOrderAdapter.ViewHolder>{
 
         class ViewHolder extends RecyclerView.ViewHolder{
@@ -194,7 +251,7 @@ public class BoxAboutActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             final WorkOrder workOrder = workOrderList.get(workOrderList.size() - 1 - position);
-            holder.workOrder_time.setText(workOrder.getUpdate_time());
+            holder.workOrder_time.setText(getTime(workOrder.getUpdate_time()));
             switch (workOrder.getWorkOrder_status()){
                 case CREATE_NEW_ORDER:
                     holder.workOrder_status.setText("添加订单");
@@ -205,7 +262,7 @@ public class BoxAboutActivity extends AppCompatActivity {
                 case CARRY_BOX_NUMBER:
                     holder.workOrder_status.setText("已完成");
                     holder.workOrder_number.setText(workOrder.getUpdate_BoxNumber() + "");
-                    holder.workOrder_status.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                    holder.workOrder_status.setTextColor(getResources().getColor(R.color.boxcarryout));
                     holder.workOrder_Text.setText("个纸盒");
                     break;
                 case ADD_DATA_NUMBER:

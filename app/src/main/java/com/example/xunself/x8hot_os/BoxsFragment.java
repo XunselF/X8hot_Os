@@ -60,6 +60,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
     private EditText textview;
     //搜索框内容
 
+    private List<Box> mBoxsList;                                    //全局数据
     private List<Box> boxsList;                                     //数据
     private List<Box> beforeBoxsList;                               //历史纪录
 
@@ -74,6 +75,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
 
 
     private LinearLayout fragmentBoxLayout;
+    private LinearLayout nodataLayout;
 
 
     private FloatingActionsMenu floatingActionsMenu;
@@ -118,7 +120,11 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
     private void getFooterData(){
         main_footer.setVisibility(View.VISIBLE);
         if (beforeBoxsList.size() == 0){
-            main_footer_text.setText("现在没有纸箱工单数据~ \n 快点击右下角进行添加纸箱操作吧~");
+            if (inquireStatus == INQUIRE_CARRYOUT_BOX){
+                main_footer_text.setText("现在没有已完成的纸箱~");
+            }else if (inquireStatus == INQUIRE_NOCARRYOUT_BOX){
+                main_footer_text.setText("现在没有未完成的纸箱~");
+            }
         }else{
             main_footer_text.setText("当前有" + beforeBoxsList.size() + "个纸箱数据~");
         }
@@ -157,20 +163,34 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
         switch (item.getItemId()) {
             case R.id.all_box:
                 inquireStatus = INQUIRE_ALL_BOX;
-                Toast.makeText(getActivity(),"已显示全部纸箱数据",Toast.LENGTH_SHORT).show();
+                getBoxList();
+                if (boxsList.size() == 0){
+                    Toast.makeText(getActivity(),"列表没有数据！",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getActivity(),"已显示全部纸箱数据",Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.carryout_box:
                 inquireStatus = INQUIRE_CARRYOUT_BOX;
-                Toast.makeText(getActivity(),"已显示已完成纸箱数据",Toast.LENGTH_SHORT).show();
+                getBoxList();
+                if (boxsList.size() == 0){
+                    Toast.makeText(getActivity(),"列表没有数据！",Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getActivity(), "已显示已完成纸箱数据", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.nocarryout_box:
                 inquireStatus = INQUIRE_NOCARRYOUT_BOX;
-                Toast.makeText(getActivity(),"已显示未完成纸箱数据",Toast.LENGTH_SHORT).show();
+                getBoxList();
+                if (boxsList.size() == 0){
+                    Toast.makeText(getActivity(),"列表没有数据！",Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getActivity(), "已显示未完成纸箱数据", Toast.LENGTH_SHORT).show();
+                }
                 break;
             default:
                 break;
         }
-        getBoxList();
         return true;
     }
 
@@ -186,6 +206,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
         main_footer = (LinearLayout) view.findViewById(R.id.main_footer);
         main_footer_text = (TextView) view.findViewById(R.id.main_footer_text);
         fragmentBoxLayout = (LinearLayout) view.findViewById(R.id.Fragment_BoxLayout);
+        nodataLayout = (LinearLayout) view.findViewById(R.id.nodata_layout);
         floatingActionsMenu = (FloatingActionsMenu) view.findViewById(R.id.fab_menu);
         addBoxButton = (FloatingActionButton) view.findViewById(R.id.fab_add);
         recordBoxButton = (FloatingActionButton) view.findViewById(R.id.fab_record);
@@ -357,6 +378,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
      */
     private void getBoxList(){
         if (boxsList == null){
+            mBoxsList = new ArrayList<>();
             beforeBoxsList = new ArrayList<>();
             boxsList = new ArrayList<>();
             boxsId = new ArrayList<>();
@@ -366,7 +388,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
             boxsId.clear();
         }
 
-
+        mBoxsList = DataSupport.findAll(Box.class);
         SortBoxsList();
         beforeBoxsList.addAll(boxsList);
         for (int i = 0; i < boxsList.size(); i ++){
@@ -374,6 +396,14 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
             boxsId.add(box.getBox_id());
         }
         getFooterData();
+
+        if (mBoxsList.size() == 0){
+            fragmentBoxLayout.setVisibility(View.GONE);
+            nodataLayout.setVisibility(View.VISIBLE);
+        }else{
+            fragmentBoxLayout.setVisibility(View.VISIBLE);
+            nodataLayout.setVisibility(View.GONE);
+        }
         boxsAdapter.notifyDataSetChanged();
     }
 
@@ -482,10 +512,10 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
 
             if (dataNHnum > 0){
                 holder.dataNHnum.setTextColor(getResources().getColor(R.color.colorwarning));
-                holder.dataNHnum.setText("(还需要"+ dataNHnum + "个材料)");
+                holder.dataNHnum.setText("(还需要"+ dataNHnum + "个材料！)");
                 holder.dataWarningImage.setVisibility(View.VISIBLE);
             }else{
-                holder.dataNHnum.setTextColor(getResources().getColor(R.color.colorPrimary));
+                holder.dataNHnum.setTextColor(getResources().getColor(R.color.boxcarryout));
                 holder.dataNHnum.setText("(已经不需要材料)");
                 holder.dataWarningImage.setVisibility(View.GONE);
             }

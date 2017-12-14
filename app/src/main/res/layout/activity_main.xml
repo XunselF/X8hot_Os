@@ -36,9 +36,9 @@
             android:layout_weight="1">
             <ImageView
                 android:id="@+id/boxs_image"
-                android:src="@drawable/ic_dns_blue_48dp"
-                android:layout_width="25dip"
-                android:layout_height="25dip"
+                android:src="@drawable/box_fragment_src"
+                android:layout_width="30dip"
+                android:layout_height="30dip"
                 android:layout_gravity="center"/>
             <TextView
                 android:id="@+id/boxs_text"
@@ -57,9 +57,9 @@
             android:layout_weight="1">
             <ImageView
                 android:id="@+id/workOrder_image"
-                android:src="@drawable/ic_markunread_mailbox_blue_48dp"
-                android:layout_width="25dip"
-                android:layout_height="25dip"
+                android:src="@drawable/ic_dns_black_48dp"
+                android:layout_width="30dip"
+                android:layout_height="30dip"
                 android:layout_gravity="center"/>
             <TextView
                 android:id="@+id/workOrder_text"

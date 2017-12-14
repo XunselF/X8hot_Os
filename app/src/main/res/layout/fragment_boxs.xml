@@ -7,17 +7,49 @@
     android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true">
+
+
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#fff">
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/nodata_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_marginTop="140dp"
+                android:layout_gravity="center"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_no_sim_black_48dp"/>
 
+            <TextView
+                android:layout_marginTop="30dp"
+                android:textColor="#000000"
+                android:textSize="14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="现在列表没有数据~"/>
+            <TextView
+                android:layout_marginTop="5dp"
+                android:textColor="#000000"
+                android:textSize="14dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="快点击右下角的蓝色按钮添加数据吧~"/>
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/Fragment_BoxLayout"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clickable="true">
+            android:clickable="true"
+            android:visibility="gone">
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -38,7 +70,7 @@
                     <LinearLayout
                         android:id="@+id/main_footer"
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
+                        android:layout_height="60dp"
                         android:layout_marginTop="0.1dp"
                         android:background="#fff"
                         android:layout_marginBottom="0.1dp">
