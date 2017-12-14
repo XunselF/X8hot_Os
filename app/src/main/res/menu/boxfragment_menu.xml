@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item android:id="@+id/action_search" android:title="搜索"
         android:icon="@drawable/ic_search_white_24dp"
         android:orderInCategory="100"
         app:actionViewClass="android.support.v7.widget.SearchView"
-        app:showAsAction="collapseActionView|ifRoom"/>
+        app:showAsAction="collapseActionView|always"/>
+    <item android:id="@+id/all_box"
+        android:title="全部数据"/>
+    <item android:id="@+id/carryout_box"
+        android:title="已完成纸箱"/>
+    <item android:id="@+id/nocarryout_box"
+        android:title="未完成纸箱"/>
+
 </menu>

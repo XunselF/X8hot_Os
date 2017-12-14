@@ -66,7 +66,7 @@ public class WorkorderFragment extends Fragment {
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         ImageView searchButton = (ImageView) searchView.findViewById(R.id.search_button);
         EditText textview = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
-        textview.setTextColor(getResources().getColor(R.color.text));
+        textview.setTextColor(getResources().getColor(R.color.colorwhile));
         searchView.setQueryHint("请输入订单号：");
         searchButton.setImageResource(R.drawable.ic_search_white_24dp);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -95,10 +95,13 @@ public class WorkorderFragment extends Fragment {
             }
         }
         if (name.equals("") && oldBoxWorkIdList.size() == 0){
-            footLayout.setVisibility(View.VISIBLE);
+            getFooterData();
         }else if (name.equals("") && oldBoxWorkIdList.size() == boxWorkIdList.size()){
+            getFooterData();
+        }else if (!name.equals("") && boxWorkIdList.size() == 0){
             footLayout.setVisibility(View.VISIBLE);
-        }else {
+            footerText.setText("您所输入的订单号不存在");
+        } else {
             footLayout.setVisibility(View.GONE);
         }
         workOrderAdapter.notifyDataSetChanged() ;                                    //更新数据
@@ -115,12 +118,20 @@ public class WorkorderFragment extends Fragment {
 
         boxList = DataSupport.findAll(Box.class);
 
+        if (boxList.size() != 0){
+            getBoxWorkId();                                               //当执行完数据之后再执行获取工单
+        }
 
-
+        getFooterData();
+    }
+    /**
+     * 获取尾部数据
+     */
+    private void getFooterData(){
+        footLayout.setVisibility(View.VISIBLE);
         if (boxList.size() == 0){
             footerText.setText("当前没有工单数据~");
         }else{
-            getBoxWorkId();                                               //当执行完数据之后再执行获取工单
             footerText.setText("当前有" + boxWorkIdList.size() + "条工单数据~");
         }
     }
@@ -150,18 +161,7 @@ public class WorkorderFragment extends Fragment {
         return boxItemList;
     }
 
-    /**
-     * 获取单个工单的总价
-     * @param boxItemList   传入单个工单的所有纸箱数据
-     * @return      返回总价
-     */
-    private double getWorkTotalPrize(List<Box> boxItemList){
-        double totalPrize = 0;
-        for (int i = 0; i < boxItemList.size(); i++){
-            totalPrize += (double) boxItemList.get(i).getBox_num() * (double)boxItemList.get(i).getBox_prize();          //叠加单个纸箱的价格
-        }
-        return totalPrize;
-    }
+
 
     /**
      * 初始化

@@ -268,7 +268,7 @@ public class AddBoxsActivity extends AppCompatActivity implements View.OnClickLi
                     box.save();
                     Toast.makeText(AddBoxsActivity.this,"提交成功！",Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(AddBoxsActivity.this,"提交失败！纸箱内已经存在相同的数据",Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddBoxsActivity.this,"提交失败！已存在相同的数据！",Toast.LENGTH_LONG).show();
                 }
                 dialogContent.dismiss();
                 finish();

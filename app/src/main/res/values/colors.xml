@@ -8,7 +8,8 @@
     <color name="colorwarning">#ff5356</color>
 
     <color name="black_semi_transparent">#B2000000</color>
-    <color name="text">#FFFFFF</color>
+    <color name="colorwhile">#ffffff</color>
+    <color name="colortext">#838383</color>
 
     <color name="boxcarryout">#5edc7b</color>
     <color name="boxnocarryout">#ff5356</color>

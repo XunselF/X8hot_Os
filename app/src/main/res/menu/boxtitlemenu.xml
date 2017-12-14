@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/all_item"
+        android:title="全部数据"/>
+    <item android:id="@+id/carryout_item"
+        android:title="已完成数据"/>
+    <item android:id="@+id/no_item"
+        android:title="未完成数据"/>
+</menu>

@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -69,6 +70,8 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
     private BoxsAdapter boxsAdapter;
     private SearchView searchView;
 
+    private ImageView boxsTitlePopupMenu;
+
 
     private LinearLayout fragmentBoxLayout;
 
@@ -78,8 +81,22 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
     private FloatingActionButton recordBoxButton;
     private FloatingActionButton appaboutButton;
 
+
+    /**
+     * 工单是否完成状态
+     */
     private final int NOT_CARRY_OUT = 0;                                        //工单未完成
     private final int CARRY_OUT = 1;                                            //工单已完成
+
+    /**
+     * 查询状态
+     */
+    private final int INQUIRE_ALL_BOX = 0;
+    private final int INQUIRE_CARRYOUT_BOX = 1;
+    private final int INQUIRE_NOCARRYOUT_BOX = 2;
+
+
+    private int inquireStatus;                                                  //查看状态
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -93,16 +110,17 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
         super.onResume();
         setHasOptionsMenu(true);
         getBoxList();               //获取数据
-        getFooterData();
+
         if (textview != null){
             setSearchView(textview.getText().toString());
         }
     }
     private void getFooterData(){
+        main_footer.setVisibility(View.VISIBLE);
         if (beforeBoxsList.size() == 0){
             main_footer_text.setText("现在没有纸箱工单数据~ \n 快点击右下角进行添加纸箱操作吧~");
         }else{
-            main_footer_text.setText("总共有" + beforeBoxsList.size() + "个纸箱");
+            main_footer_text.setText("当前有" + beforeBoxsList.size() + "个纸箱数据~");
         }
     }
 
@@ -110,12 +128,12 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        getActivity().getMenuInflater().inflate(R.menu.main_menu,menu);
+        getActivity().getMenuInflater().inflate(R.menu.boxfragment_menu,menu);
         MenuItem menuItem = menu.findItem(R.id.action_search);//在菜单中找到对应控件的item
         searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         ImageView searchButton = (ImageView) searchView.findViewById(R.id.search_button);
         textview = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
-        textview.setTextColor(getResources().getColor(R.color.text));
+        textview.setTextColor(getResources().getColor(R.color.colorwhile));
         searchView.setQueryHint("请输入纸箱型号：");
         searchButton.setImageResource(R.drawable.ic_search_white_24dp);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -136,13 +154,23 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.action_search:
-
+        switch (item.getItemId()) {
+            case R.id.all_box:
+                inquireStatus = INQUIRE_ALL_BOX;
+                Toast.makeText(getActivity(),"已显示全部纸箱数据",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.carryout_box:
+                inquireStatus = INQUIRE_CARRYOUT_BOX;
+                Toast.makeText(getActivity(),"已显示已完成纸箱数据",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nocarryout_box:
+                inquireStatus = INQUIRE_NOCARRYOUT_BOX;
+                Toast.makeText(getActivity(),"已显示未完成纸箱数据",Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
         }
+        getBoxList();
         return true;
     }
 
@@ -199,12 +227,12 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
      * 对数据进行排序
      */
     private void SortBoxsList(){
-        List<Box> boxList = DataSupport.findAll(Box.class);
+
+        List<Box> boxList = getInquireData();
         String[] boxsId = new String[boxList.size()];
         int[] boxsItem = new int[boxList.size()];
         String tempBoxId = "";
         int tempBoxItem = 0;
-        boxList = DataSupport.findAll(Box.class);
 
         for (int i = 0; i < boxList.size(); i++){
             boxsId[i] = boxList.get(i).getBox_id();
@@ -246,16 +274,38 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
                         }
                     }
 
-                //31 22 54 12 11
-            }// 22 31 54 12 11
+
+            }
         }
+
+        this.boxsList.clear();
+        //清空
 
         for (int i = 0; i < boxList.size(); i++){
             this.boxsList.add(boxList.get(boxsItem[i]));
         }
 
-
     }
+
+    /**
+     * 根据查询状态获取相对应数据源
+     */
+    private List<Box> getInquireData(){
+        List<Box> boxList = new ArrayList<>();
+        switch (inquireStatus){
+            case INQUIRE_ALL_BOX:
+                boxList = DataSupport.findAll(Box.class);
+                break;
+            case INQUIRE_CARRYOUT_BOX:
+                boxList = DataSupport.where("isCarryOut = ?",CARRY_OUT + "").find(Box.class);
+                break;
+            case INQUIRE_NOCARRYOUT_BOX:
+                boxList = DataSupport.where("isCarryOut = ?",NOT_CARRY_OUT + "").find(Box.class);
+                break;
+        }
+        return boxList;
+    }
+
 
     /**
      *查询两个字符的首字符
@@ -290,10 +340,13 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
             }
         }
         if (name.equals("") && beforeBoxsList.size() == 0){
-            main_footer.setVisibility(View.VISIBLE);
+            getFooterData();
         }else if (name.equals("") && beforeBoxsList.size() == boxsList.size()){
+            getFooterData();
+        }else if (!name.equals("") && boxsList.size() == 0){
             main_footer.setVisibility(View.VISIBLE);
-        }else {
+            main_footer_text.setText("您所输入的纸箱型号不存在");
+        } else {
             main_footer.setVisibility(View.GONE);
         }
         boxsAdapter.notifyDataSetChanged() ;                                    //更新数据
@@ -303,9 +356,16 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
      * 获取数据源
      */
     private void getBoxList(){
-        beforeBoxsList = new ArrayList<>();
-        boxsList = new ArrayList<>();
-        boxsId = new ArrayList<>();
+        if (boxsList == null){
+            beforeBoxsList = new ArrayList<>();
+            boxsList = new ArrayList<>();
+            boxsId = new ArrayList<>();
+        }else{
+            beforeBoxsList.clear();
+            boxsList.clear();
+            boxsId.clear();
+        }
+
 
         SortBoxsList();
         beforeBoxsList.addAll(boxsList);
@@ -313,7 +373,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
             Box box = boxsList.get(i);
             boxsId.add(box.getBox_id());
         }
-
+        getFooterData();
         boxsAdapter.notifyDataSetChanged();
     }
 
@@ -439,6 +499,8 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
                 }else{
                     holder.boxIdInitialLayout.setVisibility(View.VISIBLE);
                 }
+            }else{
+                holder.boxIdInitialLayout.setVisibility(View.VISIBLE);
             }
             holder.boxIdInitial.setText(initialBoxid.toUpperCase());
 
