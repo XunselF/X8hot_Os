@@ -69,9 +69,9 @@ public class SplashActivity extends AppCompatActivity {
             dayText = (TextView) findViewById(R.id.day_text);
             timeText = (TextView) findViewById(R.id.time_text);
 
-            if (hour < 5){
+            if (hour < 6){
                 //凌晨
-                timeText.setText("凌晨了！得入睡啦~");
+                timeText.setText("凌晨了~");
             }else if (hour >= 6 && hour < 12){
                 //早上
                 timeText.setText("早上好！新的一天！");

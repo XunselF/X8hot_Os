@@ -7,6 +7,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,6 +33,8 @@ public class WorkorderFragment extends Fragment {
     private final String[] LETTER = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","S","Y","Z","0","1"
             ,"2","3","4","5","6","7","8","9"};
     private View view;
+
+    private Toolbar main_toolbar;
 
     private RecyclerView workOrderRecyclerView;
     private WorkOrderAdapter workOrderAdapter;
@@ -167,6 +170,8 @@ public class WorkorderFragment extends Fragment {
      * 初始化
      */
     private void init(){
+        main_toolbar = (Toolbar) getActivity().findViewById(R.id.main_toolbar);
+        main_toolbar.setSubtitle("");
         footLayout = (LinearLayout) view.findViewById(R.id.foot_Layout);
         footerText = (TextView) view.findViewById(R.id.workOrder_footer);
         getBoxList();                                                                     //获取数据源

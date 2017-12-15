@@ -51,6 +51,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
     private View view;
 
     private Toolbar  main_toolbar;
+    private FrameLayout mainFrameLayout;
     private LinearLayout main_footer;
     //尾部板块
 
@@ -117,6 +118,9 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
             setSearchView(textview.getText().toString());
         }
     }
+
+
+
     private void getFooterData(){
         main_footer.setVisibility(View.VISIBLE);
         if (beforeBoxsList.size() == 0){
@@ -164,6 +168,8 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
             case R.id.all_box:
                 inquireStatus = INQUIRE_ALL_BOX;
                 getBoxList();
+                main_toolbar.setTitle("X8hot_Os");
+                main_toolbar.setSubtitle("");
                 if (boxsList.size() == 0){
                     Toast.makeText(getActivity(),"列表没有数据！",Toast.LENGTH_SHORT).show();
                 }else{
@@ -173,6 +179,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
             case R.id.carryout_box:
                 inquireStatus = INQUIRE_CARRYOUT_BOX;
                 getBoxList();
+                main_toolbar.setSubtitle("已完成的数据");
                 if (boxsList.size() == 0){
                     Toast.makeText(getActivity(),"列表没有数据！",Toast.LENGTH_SHORT).show();
                 }else {
@@ -182,6 +189,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
             case R.id.nocarryout_box:
                 inquireStatus = INQUIRE_NOCARRYOUT_BOX;
                 getBoxList();
+                main_toolbar.setSubtitle("未完成的数据");
                 if (boxsList.size() == 0){
                     Toast.makeText(getActivity(),"列表没有数据！",Toast.LENGTH_SHORT).show();
                 }else {
@@ -211,7 +219,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
         addBoxButton = (FloatingActionButton) view.findViewById(R.id.fab_add);
         recordBoxButton = (FloatingActionButton) view.findViewById(R.id.fab_record);
         appaboutButton = (FloatingActionButton) view.findViewById(R.id.fab_appabout);
-
+        mainFrameLayout = (FrameLayout) view.findViewById(R.id.main_frameLayout);
         boxRecyclerView = (RecyclerView) view.findViewById(R.id.boxs_recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         boxRecyclerView.setLayoutManager(linearLayoutManager);
@@ -225,7 +233,7 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
         addBoxButton.setOnClickListener(this);
         recordBoxButton.setOnClickListener(this);
         appaboutButton.setOnClickListener(this);
-
+        mainFrameLayout.setOnClickListener(this);
         /**
          * 搜索框搜索功能
          */
@@ -424,6 +432,9 @@ public class BoxsFragment extends Fragment implements View.OnClickListener{
         Intent intent;
         switch (view.getId()){
             case R.id.Fragment_BoxLayout:
+                hideInputMethod();
+                break;
+            case R.id.main_frameLayout:
                 hideInputMethod();
                 break;
             case R.id.fab_add:

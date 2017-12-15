@@ -10,7 +10,8 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
         app:title="X8hot_Os"
-        app:titleTextColor="#fff"/>
+        app:titleTextColor="#fff"
+        app:subtitleTextColor="#fff"/>
 <FrameLayout
     android:id="@+id/main_frameLayout"
     android:layout_width="match_parent"
