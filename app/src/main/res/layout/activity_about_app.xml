@@ -44,13 +44,19 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_marginBottom="20dp">
-            <TextView
-                android:layout_marginTop="10dp"
-                android:textColor="@color/colorPrimaryDark"
-                android:text="Powered By XunselF"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"/>
+                android:layout_gravity="bottom">
+                <TextView
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="Powered By XunselF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>
